@@ -1,0 +1,14 @@
+<resources>
+
+    <string name="app_name">Yolanda\'s List Of Lists</string>
+
+    <string name="delete_first">Delete First</string>
+
+    <string name="add_new">Add New</string>
+    <string name="hello">hello</string>
+    <string name="listnametoshow">listNameToShow</string>
+    <string name="add_list">add</string>
+    <string name="delete_list">delete</string>
+    <string name="copy_list">copy</string>
+
+</resources>
