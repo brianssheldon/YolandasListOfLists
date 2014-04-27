@@ -102,9 +102,7 @@ public class ListOfListsDataSource
 	public List<OneListItem> getAllItemsForOneList(String listName)
 	{
 		List<OneListItem> listItems = new ArrayList<OneListItem>();
-//
-//		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
-//				allColumns, null, null, YolandasSqlHelper.COLUMN_LIST_NAME, null, null);
+
 		Cursor cursor = database.query(
 				YolandasSqlHelper.TABLE_COMMENTS,
 				allColumns, 
@@ -125,37 +123,6 @@ public class ListOfListsDataSource
 		// make sure to close the cursor
 		cursor.close();
 		return listItems;
-		
-		
-		
-//		System.err.println("getAllForOneList '" + listName + "'");
-//		List<OneListItem> listItems = new ArrayList<OneListItem>();
-//		String[] listNameArray = {listName};
-//return getAllComments();
-		
-		
-		
-		
-//		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
-//				allColumns, YolandasSqlHelper.COLUMN_LIST_NAME, null, null, null, null);
-////		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
-////				allColumns, YolandasSqlHelper.COLUMN_LIST_NAME, listNameArray, null, null, 
-////				YolandasSqlHelper.COLUMN_LIST_NAME);
-//
-//		System.err.println("nbr of rows: " + cursor.getCount());
-//		
-//		cursor.moveToFirst();
-//		
-//		while (!cursor.isAfterLast())
-//		{
-//			OneListItem comment = cursorToComment(cursor);
-//			listItems.add(comment);
-//			cursor.moveToNext();
-//			System.err.println(comment.toString());
-//		}
-//
-//		cursor.close();
-//		return listItems;
 	}
 
 	private OneListItem cursorToComment(Cursor cursor)
@@ -188,5 +155,12 @@ public class ListOfListsDataSource
 		}
 		
 		return false;
+	}
+
+	public void deleteAll(String listNameToShow)
+	{
+		database.delete(YolandasSqlHelper.TABLE_COMMENTS,
+				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'", null);
+		createComment(listNameToShow, "", 0);
 	}
 }

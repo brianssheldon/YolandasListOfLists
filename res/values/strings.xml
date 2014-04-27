@@ -10,5 +10,8 @@
     <string name="add_list">add</string>
     <string name="delete_list">delete</string>
     <string name="copy_list">copy</string>
+    <string name="send_as_text_message">send as text message</string>
+    <string name="delete_all_items">delete all items</string>
+    <string name="email_list">email list</string>
 
 </resources>
