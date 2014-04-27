@@ -16,4 +16,9 @@
           android:title="@string/delete_all_items"
           android:showAsAction="ifRoom"/>
    
+        <item android:id="@+id/action_undo"
+          android:icon="@drawable/ic_undo"
+          android:title="@string/undo"
+          android:showAsAction="ifRoom"/>
+   
 </menu>

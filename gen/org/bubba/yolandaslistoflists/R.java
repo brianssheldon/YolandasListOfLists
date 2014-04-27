@@ -17,7 +17,8 @@ public final class R {
         public static final int ic_email=0x7f020003;
         public static final int ic_launcher=0x7f020004;
         public static final int ic_new=0x7f020005;
-        public static final int listoflistslauncher=0x7f020006;
+        public static final int ic_undo=0x7f020006;
+        public static final int listoflistslauncher=0x7f020007;
     }
     public static final class id {
         public static final int action_add=0x7f070003;
@@ -25,6 +26,7 @@ public final class R {
         public static final int action_discard=0x7f070004;
         public static final int action_email=0x7f070007;
         public static final int action_text_message=0x7f070006;
+        public static final int action_undo=0x7f070008;
         public static final int actv=0x7f070002;
         public static final int add=0x7f070001;
         public static final int tv=0x7f070000;
@@ -51,6 +53,7 @@ public final class R {
         public static final int hello=0x7f040003;
         public static final int listnametoshow=0x7f040004;
         public static final int send_as_text_message=0x7f040008;
+        public static final int undo=0x7f04000b;
     }
     public static final class style {
         /** 

@@ -6,6 +6,7 @@ public class OneListItem
 	private String listName;
 	private String item;
 	private int quantity;
+	private int deletedNumber;
 	
 	public String getListName()
 	{
@@ -56,6 +57,20 @@ public class OneListItem
 
 	public String myToString()
 	{
-		return "id '" + id + "'  listName '" + listName + "'  item '" + item + "'   qty '" + quantity;
+		return "id '" + id 
+				+ "'  listName '" + listName 
+				+ "'  item '" + item 
+				+ "'  qty '" + quantity
+				+ "'  deleteNumber '" + deletedNumber + "'";
+	}
+
+	public int getDeletedNumber()
+	{
+		return deletedNumber;
+	}
+
+	public void setDeletedNumber(int deletedNumber)
+	{
+		this.deletedNumber = deletedNumber;
 	}
 }

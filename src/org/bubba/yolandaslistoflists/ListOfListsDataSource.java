@@ -9,14 +9,17 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
 
 public class ListOfListsDataSource
 {
 	private SQLiteDatabase database;
 	private YolandasSqlHelper dbHelper;
 	private String[] allColumns =
-	{ YolandasSqlHelper.COLUMN_ID, YolandasSqlHelper.COLUMN_LIST_NAME, YolandasSqlHelper.COLUMN_ITEM, YolandasSqlHelper.COLUMN_QUANTITY };
+	{ YolandasSqlHelper.COLUMN_ID,
+			YolandasSqlHelper.COLUMN_LIST_NAME,
+			YolandasSqlHelper.COLUMN_ITEM,
+			YolandasSqlHelper.COLUMN_QUANTITY,
+			YolandasSqlHelper.COLUMN_DELETED_NUMBER};
 
 	public ListOfListsDataSource(Context context)
 	{
@@ -42,6 +45,7 @@ public class ListOfListsDataSource
 		values.put(YolandasSqlHelper.COLUMN_LIST_NAME, listName);
 		values.put(YolandasSqlHelper.COLUMN_ITEM, item);
 		values.put(YolandasSqlHelper.COLUMN_QUANTITY, quantity);
+		values.put(YolandasSqlHelper.COLUMN_DELETED_NUMBER, 0);
 		
 		long insertId = database.insert(YolandasSqlHelper.TABLE_COMMENTS, null, values);
 		
@@ -110,7 +114,7 @@ public class ListOfListsDataSource
 				null, 
 				null, 
 				null, 
-				YolandasSqlHelper.COLUMN_LIST_NAME);
+				YolandasSqlHelper.COLUMN_ITEM);
 
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast())
@@ -132,6 +136,7 @@ public class ListOfListsDataSource
 		comment.setListName(cursor.getString(1));
 		comment.setItem(cursor.getString(2));
 		comment.setQuantity(Integer.parseInt(cursor.getString(3)));
+		comment.setDeletedNumber(Integer.parseInt(cursor.getString(4)));
 		return comment;
 	}
 

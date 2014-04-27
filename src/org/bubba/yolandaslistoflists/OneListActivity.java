@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 public class OneListActivity extends ListActivity
 {
@@ -71,6 +73,10 @@ public class OneListActivity extends ListActivity
 			
 		case R.id.action_email:
 			break;
+
+			
+		case R.id.action_undo:
+			break;
 	 
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -78,6 +84,40 @@ public class OneListActivity extends ListActivity
         return true;
 	}
 	
+	// Will be called via the onClick attribute of the buttons in main.xml
+	public void onClick(View view)
+	{
+		@SuppressWarnings("unchecked")
+		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
+		
+		switch (view.getId())
+		{
+			case R.id.add:
+				AutoCompleteTextView tv = (AutoCompleteTextView)findViewById(R.id.actv);
+				String text = tv.getText().toString();
+				
+				if(text == null || text.trim().length() == 0) return;
+				
+				tv.setText("");
+				
+				datasource.createComment(listNameToShow, text, 1);
+				displayItems();
+				
+//				knownItemsDao.createKnownItem(text);
+//				loadKnownItemsView();
+//				
+//				groceryListDao.createItem(text, 1);
+//				
+//				((AutoCompleteTextView)findViewById(R.id.actv)).setText("");
+//	
+//				List<GroceryItem> groceryItems = getGroceryList();
+//				ArrayAdapter<GroceryItem> adapter2 = new ArrayAdapter<GroceryItem>(view.getContext(), android.R.layout.simple_list_item_1, groceryItems);
+//				setListAdapter(adapter2);
+//				loadGroceryItems();
+				break;
+			}
+			adapter.notifyDataSetChanged();
+	}
 
 	@Override
 	protected void onResume()

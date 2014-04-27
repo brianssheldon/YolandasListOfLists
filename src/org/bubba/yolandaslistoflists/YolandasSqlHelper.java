@@ -12,17 +12,19 @@ public class YolandasSqlHelper extends SQLiteOpenHelper
 	public static final String COLUMN_LIST_NAME = "listName";
 	public static final String COLUMN_ITEM = "item";
 	public static final String COLUMN_QUANTITY = "quantity";
+	public static final String COLUMN_DELETED_NUMBER = "deletedNumber";
 
 	private static final String DATABASE_NAME = "commments.db";
-	private static final int DATABASE_VERSION = 1;
+	private static final int DATABASE_VERSION = 2;
 
 	// Database creation sql statement
 	private static final String DATABASE_CREATE = "create table "
 			+ TABLE_COMMENTS + "(" 
-			+ COLUMN_ID 		+ " integer primary key autoincrement, " 
-			+ COLUMN_LIST_NAME	+ " text not null,"
-			+ COLUMN_ITEM 		+ " text not null,"
-			+ COLUMN_QUANTITY 	+ " text not null);";
+				+ COLUMN_ID 			+ " integer primary key autoincrement, " 
+				+ COLUMN_LIST_NAME		+ " text not null,"
+				+ COLUMN_ITEM 			+ " text not null,"
+				+ COLUMN_QUANTITY 		+ " text not null,"
+				+ COLUMN_DELETED_NUMBER + " text not null);";
 
 	public YolandasSqlHelper(Context context)
 	{

@@ -13,5 +13,6 @@
     <string name="send_as_text_message">send as text message</string>
     <string name="delete_all_items">delete all items</string>
     <string name="email_list">email list</string>
+    <string name="undo">undo</string>
 
 </resources>
