@@ -2,6 +2,9 @@ package org.bubba.yolandaslistoflists;
 
 import java.util.List;
 
+import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
+import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 public class MainActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
+	private KnownItemsDao knownItemsDao;
 	private String mode = "";
 
 	@Override
@@ -34,7 +38,8 @@ public class MainActivity extends ListActivity
 
 		datasource = new ListOfListsDataSource(this);
 		datasource.open();
-
+		knownItemsDao = new KnownItemsDao(this);
+		knownItemsDao.open();
 		List<OneListItem> values = datasource.getAllComments();
 
 		// use the SimpleCursorAdapter to show the elements in a ListView

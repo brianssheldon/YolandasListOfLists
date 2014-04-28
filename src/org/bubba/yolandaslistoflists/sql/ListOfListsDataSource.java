@@ -1,7 +1,9 @@
-package org.bubba.yolandaslistoflists;
+package org.bubba.yolandaslistoflists.sql;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.bubba.yolandaslistoflists.OneListItem;
 
 import android.content.ContentValues;
 import android.content.Context;

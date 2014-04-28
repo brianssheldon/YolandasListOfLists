@@ -8,6 +8,9 @@
 package org.bubba.yolandaslistoflists;
 
 public final class R {
+    public static final class array {
+        public static final int food_array=0x7f050000;
+    }
     public static final class attr {
     }
     public static final class drawable {
@@ -21,15 +24,15 @@ public final class R {
         public static final int listoflistslauncher=0x7f020007;
     }
     public static final class id {
-        public static final int action_add=0x7f070003;
-        public static final int action_copy=0x7f070005;
-        public static final int action_discard=0x7f070004;
-        public static final int action_email=0x7f070007;
-        public static final int action_text_message=0x7f070006;
-        public static final int action_undo=0x7f070008;
-        public static final int actv=0x7f070002;
-        public static final int add=0x7f070001;
-        public static final int tv=0x7f070000;
+        public static final int action_add=0x7f080003;
+        public static final int action_copy=0x7f080005;
+        public static final int action_discard=0x7f080004;
+        public static final int action_email=0x7f080007;
+        public static final int action_text_message=0x7f080006;
+        public static final int action_undo=0x7f080008;
+        public static final int actv=0x7f080002;
+        public static final int add=0x7f080001;
+        public static final int tv=0x7f080000;
     }
     public static final class layout {
         public static final int list_item=0x7f030000;
@@ -38,8 +41,8 @@ public final class R {
         public static final int onelistmain=0x7f030003;
     }
     public static final class menu {
-        public static final int main_activity_actions=0x7f060000;
-        public static final int one_list_activity_actions=0x7f060001;
+        public static final int main_activity_actions=0x7f070000;
+        public static final int one_list_activity_actions=0x7f070001;
     }
     public static final class string {
         public static final int add_list=0x7f040005;
@@ -77,10 +80,10 @@ public final class R {
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f050000;
+        public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050001;
+        public static final int AppTheme=0x7f060001;
     }
 }
