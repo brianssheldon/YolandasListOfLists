@@ -8,7 +8,10 @@ import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +22,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class OneListActivity extends ListActivity
 {
@@ -146,6 +150,55 @@ public class OneListActivity extends ListActivity
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 				this, R.layout.list_item, itemList);
 		setListAdapter(adapter);
+		getListView().setOnItemClickListener(getItemClickListener());
+	}
+
+	private OnItemClickListener getItemClickListener()
+	{
+		OnItemClickListener listViewOnClickListener = new OnItemClickListener()
+		{
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				final String item = (String) getListAdapter().getItem(arg2);
+
+				if(item == null) return;
+
+		        CharSequence[] items = new CharSequence[103];
+		        items[0] = "Delete Item '" + item + "' ?";
+		        items[1] = "Cancel";
+		        for (int i = 0; i < 101; i++) items[i+2]=""+(i+1);
+
+		        AlertDialog.Builder builder = new AlertDialog.Builder(arg0.getContext());
+		        builder.setIcon(android.R.drawable.ic_dialog_alert);
+		        builder.setTitle("Delete Item '" + item + "'");
+		        builder.setItems(items, new OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int which)
+					{
+						if(which == 0)
+						{
+							datasource.deleteComment(listNameToShow, item);
+							displayItems();
+							return;
+						}
+						else if(which == 1)
+						{
+							return;
+						}
+						else if(which > 1)
+						{
+//							item.setQuantity(which - 1);
+//							saveItem(item);
+//							loadGroceryItems();
+						}
+					}
+				});
+		        AlertDialog alert = builder.create();
+		        alert.show();
+		        alert.getWindow().setLayout(400, 600);
+			}
+		};
+		return listViewOnClickListener;
 	}
 	
 	@Override
@@ -166,9 +219,9 @@ public class OneListActivity extends ListActivity
 			break;
 			
 		case R.id.action_discard:
-			datasource.deleteAll(listNameToShow);
-			displayItems();
-			
+
+			deleteAllItemsOnList();
+
 			break;
 			
 		case R.id.action_email:
@@ -176,12 +229,54 @@ public class OneListActivity extends ListActivity
 
 			
 		case R.id.action_undo:
-			break;
-	 
-	        default:
-	            return super.onOptionsItemSelected(item);
+				int lastDeleteNumber = datasource.undoDelete(listNameToShow);
+				
+				if(lastDeleteNumber == 0)
+				{
+					Toast.makeText(this, "\nSorry\n\nnothing to undo.\n\n", Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					displayItems();
+				}
+				break;
+	     default:
+	         return super.onOptionsItemSelected(item);
 	    }
         return true;
+	}
+
+	private void deleteAllItemsOnList()
+	{
+		CharSequence[] items = new CharSequence[2];
+		items[0] = "Yes, please delete ALL Items on this list.";
+		items[1] = "Cancel";
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setTitle("Delete list " + listNameToShow);
+		builder.setItems(items, new OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+				
+				if(which == 0) // delete
+				{
+
+					datasource.deleteAll(listNameToShow);
+					displayItems();
+				}
+				else // cancel
+				{
+					return;
+				}
+			}
+		});
+		
+		AlertDialog alert = builder.create();
+		alert.show();
+		alert.getWindow().setLayout(400, 400);
 	}
 	
 	// Will be called via the onClick attribute of the buttons in main.xml

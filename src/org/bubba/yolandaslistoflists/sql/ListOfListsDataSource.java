@@ -10,7 +10,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 public class ListOfListsDataSource
 {
@@ -112,7 +114,8 @@ public class ListOfListsDataSource
 		Cursor cursor = database.query(
 				YolandasSqlHelper.TABLE_COMMENTS,
 				allColumns, 
-				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listName + "'", 
+				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listName + "' and "
+				  + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0' ", 
 				null, 
 				null, 
 				null, 
@@ -169,5 +172,50 @@ public class ListOfListsDataSource
 		database.delete(YolandasSqlHelper.TABLE_COMMENTS,
 				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'", null);
 		createComment(listNameToShow, "", 0);
+	}
+
+	public int undoDelete(String listNameToShow)
+	{
+		int lastDeleteNumber = getBiggestDeleteNumber(listNameToShow);
+
+		if(lastDeleteNumber == 0) return 0;
+		
+		String sqlStmt = "UPDATE " + YolandasSqlHelper.TABLE_COMMENTS
+				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0' "
+		    		+ "where listName = '" + listNameToShow + "'"
+		    		+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + lastDeleteNumber + "'";
+		
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
+
+		int recordsUpdated = stmt.executeUpdateDelete();
+		return recordsUpdated;
+	}
+	
+	public void deleteComment(String listNameToShow, String item)
+	{
+		int nextDeleteNumber = getBiggestDeleteNumber(listNameToShow) + 1;
+		
+		String sqlStmt = "UPDATE " + YolandasSqlHelper.TABLE_COMMENTS
+				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + nextDeleteNumber + "' "
+		    		+ "where listName = '" + listNameToShow + "'"
+		    		+ " and item = '" + item + "'";
+		
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
+
+		int recordsUpdated = stmt.executeUpdateDelete();
+	}
+
+	private int getBiggestDeleteNumber(String listNameToShow)
+	{
+	    String sqlStmt = "SELECT MAX("+ YolandasSqlHelper.COLUMN_DELETED_NUMBER
+	    		+ ") FROM " + YolandasSqlHelper.TABLE_COMMENTS
+			+ " where listName = '" + listNameToShow + "'";
+	    
+//	    System.err.println(sqlStmt);
+	    
+		final SQLiteStatement stmt = database.compileStatement(
+	    	sqlStmt);
+
+	    return (int) stmt.simpleQueryForLong();
 	}
 }
