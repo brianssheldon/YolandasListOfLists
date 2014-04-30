@@ -70,6 +70,8 @@ public class ListOfListsDataSource
 
 	public List<OneListItem> getAllComments()
 	{
+//		deleteAllBlankEntries();
+		
 		List<OneListItem> listItems = new ArrayList<OneListItem>();
 
 		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
@@ -88,24 +90,24 @@ public class ListOfListsDataSource
 		return listItems;
 	}
 
-	public List<OneListItem> getAllLists()
-	{
-		List<OneListItem> comments = new ArrayList<OneListItem>();
-
-		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
-				allColumns, YolandasSqlHelper.COLUMN_LIST_NAME, null, null, null, null);
-
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast())
-		{
-			OneListItem comment = cursorToComment(cursor);
-			comments.add(comment);
-			cursor.moveToNext();
-		}
-		// make sure to close the cursor
-		cursor.close();
-		return comments;
-	}
+//	public List<OneListItem> getAllLists()
+//	{
+//		List<OneListItem> comments = new ArrayList<OneListItem>();
+//
+//		Cursor cursor = database.query(YolandasSqlHelper.TABLE_COMMENTS,
+//				allColumns, YolandasSqlHelper.COLUMN_LIST_NAME, null, null, null, null);
+//
+//		cursor.moveToFirst();
+//		while (!cursor.isAfterLast())
+//		{
+//			OneListItem comment = cursorToComment(cursor);
+//			comments.add(comment);
+//			cursor.moveToNext();
+//		}
+//		// make sure to close the cursor
+//		cursor.close();
+//		return comments;
+//	}
 
 	public List<OneListItem> getAllItemsForOneList(String listName)
 	{
@@ -166,6 +168,14 @@ public class ListOfListsDataSource
 		
 		return false;
 	}
+//
+//	private void deleteAllBlankEntries()
+//	{
+//		int del = database.delete(YolandasSqlHelper.TABLE_COMMENTS,
+//				YolandasSqlHelper.COLUMN_LIST_NAME + " = '' or "
+//				+ YolandasSqlHelper.COLUMN_ITEM + " = ''", null);
+//		System.err.println("deleteAllBlankEntries : " + del);
+//	}
 
 	public void deleteAll(String listNameToShow)
 	{

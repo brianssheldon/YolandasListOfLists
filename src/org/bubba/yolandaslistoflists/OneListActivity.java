@@ -263,7 +263,6 @@ public class OneListActivity extends ListActivity
 				
 				if(which == 0) // delete
 				{
-
 					datasource.deleteAll(listNameToShow);
 					displayItems();
 				}
@@ -296,7 +295,8 @@ public class OneListActivity extends ListActivity
 				tv.setText("");
 				
 				datasource.createComment(listNameToShow, text, 1);
-				displayItems();
+				
+//				displayItems();
 				
 //				knownItemsDao.createKnownItem(text);
 //				loadKnownItemsView();

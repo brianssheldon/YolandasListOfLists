@@ -7,7 +7,23 @@ public class OneListItem
 	private String item;
 	private int quantity;
 	private int deletedNumber;
+
+	public OneListItem()
+	{
+		listName = "";
+		item = "";
+		quantity = 0;
+		deletedNumber = 0;
+	}
 	
+	public OneListItem(String newName)
+	{
+		this.listName = newName;
+		item = "";
+		quantity = 0;
+		deletedNumber = 0;
+	}
+
 	public String getListName()
 	{
 		return listName;

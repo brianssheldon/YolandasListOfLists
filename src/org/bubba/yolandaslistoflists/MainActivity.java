@@ -40,6 +40,11 @@ public class MainActivity extends ListActivity
 		datasource.open();
 		knownItemsDao = new KnownItemsDao(this);
 		knownItemsDao.open();
+		displayList();
+	}
+
+	private void displayList()
+	{
 		List<OneListItem> values = datasource.getAllComments();
 
 		// use the SimpleCursorAdapter to show the elements in a ListView
@@ -195,6 +200,7 @@ public class MainActivity extends ListActivity
 			
         		if(datasource.copyList(listNameToCopy, et.getText().toString(), adapter))
 				{
+//        			displayList();
 					adapter.notifyDataSetChanged();
 				}
 				else
@@ -221,7 +227,7 @@ public class MainActivity extends ListActivity
         layout.setPadding(2, 2, 2, 2);
 
         TextView tv = new TextView(this);
-        tv.setText("Copy List");
+        tv.setText("New List");
         tv.setPadding(40, 40, 40, 40);
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(20);
@@ -257,7 +263,9 @@ public class MainActivity extends ListActivity
         		if(null == newName || "".equals(newName)) return;
         		
 				datasource.createComment(newName, "", 0);
-				adapter.notifyDataSetChanged();
+				adapter.add(new OneListItem(newName));
+//				adapter.notifyDataSetChanged();
+				displayList();
             }
         });
 
