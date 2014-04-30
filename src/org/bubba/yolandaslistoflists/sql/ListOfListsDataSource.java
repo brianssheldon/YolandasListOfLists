@@ -169,9 +169,20 @@ public class ListOfListsDataSource
 
 	public void deleteAll(String listNameToShow)
 	{
-		database.delete(YolandasSqlHelper.TABLE_COMMENTS,
-				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'", null);
-		createComment(listNameToShow, "", 0);
+//		database.delete(YolandasSqlHelper.TABLE_COMMENTS,
+//				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'", null);
+//		createComment(listNameToShow, "", 0);
+		int nextDeleteNumber = getBiggestDeleteNumber(listNameToShow) + 1;
+
+
+		String sqlStmt = "UPDATE " + YolandasSqlHelper.TABLE_COMMENTS
+				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + nextDeleteNumber + "' "
+		    		+ "where listName = '" + listNameToShow + "'"
+		    		+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0'";
+		
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
+
+		int recordsUpdated = stmt.executeUpdateDelete();
 	}
 
 	public int undoDelete(String listNameToShow)
