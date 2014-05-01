@@ -159,6 +159,7 @@ public class OneListActivity extends ListActivity
 		{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
+				final int whichOne = arg2;
 				final String item = (String) getListAdapter().getItem(arg2);
 
 				if(item == null) return;
@@ -178,12 +179,10 @@ public class OneListActivity extends ListActivity
 						if(which == 0)
 						{
 							datasource.deleteComment(listNameToShow, item);
-							displayItems();
-							return;
 						}
 						else if(which == 1)
 						{
-							return;
+							displayItems();
 						}
 						else if(which > 1)
 						{
@@ -191,6 +190,9 @@ public class OneListActivity extends ListActivity
 //							saveItem(item);
 //							loadGroceryItems();
 						}
+
+						displayItems();
+//				        getListView().getChildAt(whichOne).setSelected(false);
 					}
 				});
 		        AlertDialog alert = builder.create();

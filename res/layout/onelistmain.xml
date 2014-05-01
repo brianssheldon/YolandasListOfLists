@@ -1,42 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/tv"
-			android:width="250dp"
-			android:layout_width="250dp"
-			android:layout_height="0dp"
-	        android:layout_alignParentLeft="true"
-	        android:layout_alignParentTop="true"
-	        android:layout_alignParentBottom="false"/>
-		
-        <Button
-            android:id="@+id/add"
-			android:width="10dp"
-			android:layout_width="10dip"
-			android:layout_height="wrap_content"
-            android:text="@string/add_new" 
-            android:onClick="onClick"
-        	android:layout_toRightOf="@id/tv"
-	        android:layout_alignParentRight="true"
-	        android:layout_alignParentTop="true"
-	        android:layout_alignParentBottom="false"/>
-        
-		<AutoCompleteTextView
-		    android:id="@+id/actv"
-			android:layout_width="250dip"
-			android:layout_height="wrap_content"
-			android:width="250dp"
-			android:layout_below="@id/tv"/>
-        
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="250dp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:width="250dp" />
+
+    <Button
+        android:id="@+id/add"
+        android:layout_width="10dip"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/tv"
+        android:onClick="onClick"
+        android:text="@string/add_new"
+        android:width="10dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/actv"
+        android:layout_width="250dip"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv"
+        android:width="250dp"
+        tools:ignore="LabelFor" />
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-		android:layout_below="@id/actv"
-		android:typeface="monospace"/>
+        android:layout_below="@id/actv"
+        android:listSelector="@drawable/list_selector"
+        android:typeface="monospace" />
 
-</RelativeLayout> 
+</RelativeLayout>
