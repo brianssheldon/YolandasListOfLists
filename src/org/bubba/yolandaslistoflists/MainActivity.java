@@ -72,7 +72,7 @@ public class MainActivity extends ListActivity
 	{
 	    switch (item.getItemId())
 	    {
-		case 16908332:
+		case android.R.id.home:
 			finish();
 			break;
 			

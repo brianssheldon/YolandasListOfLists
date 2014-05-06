@@ -231,7 +231,7 @@ public class OneListActivity extends ListActivity
 		case R.id.action_email:
 			break;
 
-		case 16908332:
+		case android.R.id.home:
 			finish();
 			break;
 			
