@@ -46,6 +46,8 @@ public class OneListActivity extends ListActivity
 		displayItems();
 		
 		getActionBar().setTitle(listNameToShow);
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void openDb()
@@ -229,6 +231,9 @@ public class OneListActivity extends ListActivity
 		case R.id.action_email:
 			break;
 
+		case 16908332:
+			finish();
+			break;
 			
 		case R.id.action_undo:
 				int lastDeleteNumber = datasource.undoDelete(listNameToShow);
@@ -315,7 +320,7 @@ public class OneListActivity extends ListActivity
 			}
 			adapter.notifyDataSetChanged();
 	}
-
+	
 	@Override
 	protected void onResume()
 	{

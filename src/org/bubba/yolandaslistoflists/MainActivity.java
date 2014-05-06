@@ -55,6 +55,8 @@ public class MainActivity extends ListActivity
 		getListView().setOnItemClickListener(getItemClickListener());
 		
 		getActionBar().show();
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	@Override
@@ -70,6 +72,10 @@ public class MainActivity extends ListActivity
 	{
 	    switch (item.getItemId())
 	    {
+		case 16908332:
+			finish();
+			break;
+			
 		case R.id.action_add:
 			mode = "";
 			alertDialogAddList();
