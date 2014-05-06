@@ -305,8 +305,8 @@ public class OneListActivity extends ListActivity
 				
 //				displayItems();
 				
-//				knownItemsDao.createKnownItem(text);
-//				loadKnownItemsView();
+				knownItemsDao.createKnownItem(text);
+				loadKnownItemsView();
 //				
 //				groceryListDao.createItem(text, 1);
 //				

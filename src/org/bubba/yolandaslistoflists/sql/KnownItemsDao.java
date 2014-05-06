@@ -11,6 +11,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 
 public class KnownItemsDao
 {
@@ -36,6 +37,8 @@ public class KnownItemsDao
 
 	public KnownItem createKnownItem(String item)
 	{
+		if(doesItemAlreadyExist(item)) return new KnownItem(item);
+		
 		ContentValues values = new ContentValues();
 		values.put(KnownItemsSqlHelper.COLUMN_ITEM, item);
 		long insertId = database.insert(KnownItemsSqlHelper.TABLE_NAME, null, values);
@@ -49,6 +52,19 @@ public class KnownItemsDao
 		return newKnownItem;
 	}
 
+	private boolean doesItemAlreadyExist(String item)
+	{
+	    String sqlStmt = "SELECT count(*) FROM " 
+	    	+ KnownItemsSqlHelper.TABLE_NAME
+			+ " where " + KnownItemsSqlHelper.COLUMN_ITEM + " = '" + item + "'";
+	    
+//	    System.err.println(sqlStmt);
+	    
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt);
+
+	    return 0 != stmt.simpleQueryForLong();
+	}
+	
 	public void deleteItem(KnownItem item)
 	{
 		long id = item.getId();
