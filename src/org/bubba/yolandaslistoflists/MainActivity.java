@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -28,7 +29,7 @@ public class MainActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
-	private String mode = "";
+	private OneListItem oneListItemBO = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -46,19 +47,20 @@ public class MainActivity extends ListActivity
 	private void displayList()
 	{
 		List<OneListItem> values = datasource.getAllComments();
-
+		
 		// use the SimpleCursorAdapter to show the elements in a ListView
 		ArrayAdapter<OneListItem> adapter = new ArrayAdapter<OneListItem>(this,
 				android.R.layout.simple_list_item_1, values);
 		
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
+		getListView().setOnItemLongClickListener(getOnItemLongClickListener());
 		
 		getActionBar().show();
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
-	
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -77,25 +79,39 @@ public class MainActivity extends ListActivity
 			break;
 			
 		case R.id.action_add:
-			mode = "";
 			alertDialogAddList();
 			break;
 			
 		case R.id.action_discard:
-			mode = "discard";
-			Toast.makeText(getBaseContext(), "\nselect list to delete\n", Toast.LENGTH_SHORT).show();
+			if(oneListItemBO == null)
+			{
+				Toast.makeText(getBaseContext(), 
+						"'Long Press' a list to Delete",
+						Toast.LENGTH_SHORT).show();
+				break;
+			}
+			discardList(getListView(), oneListItemBO);
 			break;
 			
 		case R.id.action_copy:
-			mode = "copy";
-			Toast.makeText(getBaseContext(), "\nselect list to copy\n", Toast.LENGTH_SHORT).show();
+			if(oneListItemBO == null)
+			{
+				Toast.makeText(getBaseContext(), 
+						"'Long Press' a list to Copy",
+						Toast.LENGTH_SHORT).show();
+				break;
+			}
+			alertDialogCopy(oneListItemBO.getListName());
 			break;
 	 
-	        default:
-	            return super.onOptionsItemSelected(item);
+	    default:
+	        return super.onOptionsItemSelected(item);
 	    }
+	    
+	    oneListItemBO = null;
+	    
         return true;
-	}
+	}	
 
 	public OnItemClickListener getItemClickListener()
 	{
@@ -103,32 +119,50 @@ public class MainActivity extends ListActivity
 		{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				final OneListItem oneListItemBO = (OneListItem) getListAdapter().getItem(arg2);
+				final OneListItem oneListItemBO2 = (OneListItem) getListAdapter().getItem(arg2);
 				
-				if("discard".equals(mode))
-				{
-					discardList(arg0, oneListItemBO);
-				}
-				else if("copy".equals(mode))
-				{
-					mode = "";
-					alertDialogCopy(oneListItemBO.getListName());
-				}
-				else
-				{				
-					Intent oneListIntent = new Intent(arg0.getContext(), OneListActivity.class);
-					oneListIntent.putExtra(getString(R.string.listnametoshow), oneListItemBO.getListName());
-			    	startActivityForResult(oneListIntent, 101);
-				}
+				Intent oneListIntent = new Intent(arg0.getContext(), OneListActivity.class);
+				oneListIntent.putExtra(getString(R.string.listnametoshow), oneListItemBO2.getListName());
+		    	startActivityForResult(oneListIntent, 101);
 			}
 		};
 		return listViewOnClickListener;
 	}
 
+	private OnItemLongClickListener getOnItemLongClickListener()
+	{
+		OnItemLongClickListener oilcl = new OnItemLongClickListener()
+		{
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+			{
+				oneListItemBO = (OneListItem) getListAdapter().getItem(position);
+				
+				if(oneListItemBO == null || oneListItemBO.getListName() == null || oneListItemBO.getListName().length() == 0)
+				{
+					Toast.makeText(getBaseContext(), 
+							"Error error error" + oneListItemBO.getListName(), 
+							Toast.LENGTH_SHORT).show();
+					return false;
+				}
+				
+				int x = oneListItemBO.getListName().length();
+				
+				String blanks = "";
+				if(x < 10) blanks = "          ".substring(x);
+				
+				Toast.makeText(getBaseContext(), 
+					"Click icon to\n      delete\n         or\n      copy\n " + blanks + oneListItemBO.getListName(), 
+					Toast.LENGTH_SHORT).show();
+				return true;
+			}	
+		};
+		return oilcl;
+	}
+
 	void discardList(AdapterView<?> arg0,
 			final OneListItem oneListItemBO)
 	{
-		mode = "";
 		CharSequence[] items = new CharSequence[2];
 		items[0] = "Delete Item   '" + oneListItemBO.getListName() + "' ?";
 		items[1] = "Cancel";

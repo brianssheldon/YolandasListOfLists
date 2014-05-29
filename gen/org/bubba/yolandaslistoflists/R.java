@@ -28,17 +28,18 @@ public final class R {
         public static final int listoflistslauncherx=0x7f02000b;
     }
     public static final class id {
-        public static final int action_add=0x7f080007;
-        public static final int action_copy=0x7f080009;
-        public static final int action_discard=0x7f080008;
-        public static final int action_email=0x7f08000c;
-        public static final int action_text_message=0x7f08000b;
-        public static final int action_undo=0x7f08000a;
-        public static final int actv=0x7f080006;
-        public static final int add=0x7f080005;
+        public static final int action_add=0x7f080008;
+        public static final int action_copy=0x7f08000a;
+        public static final int action_discard=0x7f080009;
+        public static final int action_email=0x7f08000d;
+        public static final int action_text_message=0x7f08000c;
+        public static final int action_undo=0x7f08000b;
+        public static final int actv=0x7f080007;
+        public static final int add=0x7f080006;
         public static final int checkBox1=0x7f080000;
         public static final int first_letter=0x7f080003;
         public static final int item=0x7f080004;
+        public static final int label=0x7f080005;
         public static final int thumbnail=0x7f080002;
         public static final int tv=0x7f080001;
     }
@@ -47,8 +48,9 @@ public final class R {
         public static final int list_item2=0x7f030001;
         public static final int list_main_items=0x7f030002;
         public static final int list_row=0x7f030003;
-        public static final int main=0x7f030004;
-        public static final int onelistmain=0x7f030005;
+        public static final int list_row_2=0x7f030004;
+        public static final int main=0x7f030005;
+        public static final int onelistmain=0x7f030006;
     }
     public static final class menu {
         public static final int main_activity_actions=0x7f070000;
