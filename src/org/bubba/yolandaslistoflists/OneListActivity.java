@@ -1,6 +1,7 @@
 package org.bubba.yolandaslistoflists;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -128,29 +130,40 @@ public class OneListActivity extends ListActivity
 	}
 
     
-	private String getKnownItemsAsString()
-	{
-		List<KnownItem> items = getKnownItems();
-		String stringOfItems = "";
-		
-		for (int i = 0; i < items.size(); i++)
-		{
-			stringOfItems += items.get(i).getItem() + "\n";
-		}
-		return stringOfItems;
-	}
+//	private String getKnownItemsAsString()
+//	{
+//		List<KnownItem> items = getKnownItems();
+//		String stringOfItems = "";
+//		
+//		for (int i = 0; i < items.size(); i++)
+//		{
+//			stringOfItems += items.get(i).getItem() + "\n";
+//		}
+//		return stringOfItems;
+//	}
 
 	private void displayItems()
 	{
 		List<OneListItem> itemsInList = datasource.getAllItemsForOneList(listNameToShow);
-		List<String> itemList = new ArrayList<String>();
+		
+		ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> map = null;
+		
 		for(OneListItem item : itemsInList)
 		{
-			itemList.add(item.getItem());
+			if(!"".equals(item.getItem()))
+			{
+				map = new HashMap<String, String>();
+				map.put("oneItem", item.getItem());
+				map.put("oneQuantity", "" + item.getQuantity());
+				mylist.add(map);
+			}
 		}
-		
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-				this, R.layout.list_item, itemList);
+
+		SimpleAdapter adapter = new SimpleAdapter(this, mylist, R.layout.list_main_items,
+            new String[] {"oneItem", "oneQuantity"}, 
+            new int[] {R.id.oneItem, R.id.oneQuantity});
+
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
 	}
@@ -161,11 +174,14 @@ public class OneListActivity extends ListActivity
 		{
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
-				final int whichOne = arg2;
-				final String item = (String) getListAdapter().getItem(arg2);
+				final AdapterView adapterView = arg0; 
+				@SuppressWarnings("unchecked")
+				HashMap<String,String> map = (HashMap<String,String>)getListAdapter().getItem(arg2);
 
-				if(item == null) return;
-
+				if(map == null) return;
+				
+				final String item = (String) map.get("oneItem");
+				
 		        CharSequence[] items = new CharSequence[103];
 		        items[0] = "Delete Item '" + item + "' ?";
 		        items[1] = "Cancel";
@@ -184,19 +200,24 @@ public class OneListActivity extends ListActivity
 						}
 						else if(which == 1)
 						{
-							displayItems();
+//							displayItems();
 						}
 						else if(which > 1)
 						{
-//							item.setQuantity(which - 1);
-//							saveItem(item);
-//							loadGroceryItems();
+							OneListItem oneItem = datasource.getItem(listNameToShow, item);
+							oneItem.setQuantity(which - 1);
+							int rowsUpdated = datasource.updateItem(oneItem);
+							
+							if(rowsUpdated == 0) 
+							{
+								Toast.makeText(adapterView.getContext(), "\nSorry\n\nupdate failed.\n\n", Toast.LENGTH_LONG).show();
+							}
 						}
 
 						displayItems();
-//				        getListView().getChildAt(whichOne).setSelected(false);
 					}
 				});
+		        
 		        AlertDialog alert = builder.create();
 		        alert.show();
 		        alert.getWindow().setLayout(400, 600);
@@ -289,7 +310,7 @@ public class OneListActivity extends ListActivity
 	public void onClick(View view)
 	{
 		@SuppressWarnings("unchecked")
-		ArrayAdapter<String> adapter = (ArrayAdapter<String>) getListAdapter();
+		ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
 		
 		switch (view.getId())
 		{

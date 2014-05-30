@@ -239,4 +239,49 @@ public class ListOfListsDataSource
 
 	    return (int) stmt.simpleQueryForLong();
 	}
+
+	public OneListItem getItem(String listName, String item)
+	{
+		List<OneListItem> listItems = new ArrayList<OneListItem>();
+
+		Cursor cursor = database.query(
+				YolandasSqlHelper.TABLE_COMMENTS,
+				allColumns, 
+				YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listName + "' and "
+				  + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0' and "
+				  + YolandasSqlHelper.COLUMN_ITEM + " = '" + item + "'", 
+				null, 
+				null, 
+				null, 
+				YolandasSqlHelper.COLUMN_ITEM);
+
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast())
+		{
+			OneListItem comment = cursorToComment(cursor);
+			listItems.add(comment);
+			System.err.println(comment.myToString());
+			cursor.moveToNext();
+		}
+		// make sure to close the cursor
+		cursor.close();
+		if(listItems.isEmpty()) return null;
+		return listItems.get(0);
+	}
+
+	public int updateItem(OneListItem oneItem)
+	{
+//		int lastDeleteNumber = getBiggestDeleteNumber(listNameToShow);
+//
+//		if(lastDeleteNumber == 0) return 0;
+		
+		String sqlStmt = "UPDATE " + YolandasSqlHelper.TABLE_COMMENTS
+				+ " set " + YolandasSqlHelper.COLUMN_QUANTITY + " = '" + oneItem.getQuantity() + "' "
+		    		+ "where " + YolandasSqlHelper.COLUMN_ID + " = '" + oneItem.getId() + "'";
+		
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
+
+		int recordsUpdated = stmt.executeUpdateDelete();
+		return recordsUpdated;
+	}
 }
