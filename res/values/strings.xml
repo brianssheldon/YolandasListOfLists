@@ -14,6 +14,9 @@
     <string name="delete_all_items">delete all items</string>
     <string name="email_list">email list</string>
     <string name="undo">undo</string>
+    <string name="share_list">share list</string>
+    <string name="switch_from_sorted_to_dragable">switch from sorted to dragable</string>
+    <string name="edit_settings">edit settings</string>
 
     <string-array name="food_array">
         <item>alfredo sauce</item>

@@ -11,7 +11,8 @@
         android:gravity="left"
         android:width="250sp"
         android:textSize="18sp"
-        android:paddingLeft="6dp"/>
+        android:paddingLeft="6dp"
+        android:maxLines="1"/>
        
     <TextView
         android:id="@+id/oneQuantity"

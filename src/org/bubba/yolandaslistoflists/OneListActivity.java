@@ -166,6 +166,7 @@ public class OneListActivity extends ListActivity
 
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
+		getListView().setFastScrollEnabled(true);
 	}
 
 	private OnItemClickListener getItemClickListener()
@@ -239,24 +240,18 @@ public class OneListActivity extends ListActivity
 	{
 	    switch (item.getItemId())
 	    {
-		case R.id.action_text_message:
-
-			break;
-			
-		case R.id.action_discard:
-
-			deleteAllItemsOnList();
-
-			break;
-			
-		case R.id.action_email:
-			break;
-
-		case android.R.id.home:
-			finish();
-			break;
-			
-		case R.id.action_undo:
+			case R.id.action_discard:
+				deleteAllItemsOnList();
+				break;
+				
+			case R.id.action_share2:
+				break;
+	
+			case android.R.id.home:
+				finish();
+				break;
+				
+			case R.id.action_undo:
 				int lastDeleteNumber = datasource.undoDelete(listNameToShow);
 				
 				if(lastDeleteNumber == 0)
@@ -268,8 +263,9 @@ public class OneListActivity extends ListActivity
 					displayItems();
 				}
 				break;
-	     default:
-	         return super.onOptionsItemSelected(item);
+				
+		    default:
+		    	return super.onOptionsItemSelected(item);
 	    }
         return true;
 	}
@@ -306,11 +302,9 @@ public class OneListActivity extends ListActivity
 		alert.getWindow().setLayout(400, 400);
 	}
 	
-	// Will be called via the onClick attribute of the buttons in main.xml
 	public void onClick(View view)
 	{
-		@SuppressWarnings("unchecked")
-		ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+		SimpleAdapter adapter = (SimpleAdapter) getListAdapter();
 		
 		switch (view.getId())
 		{
@@ -324,22 +318,12 @@ public class OneListActivity extends ListActivity
 				
 				datasource.createComment(listNameToShow, text, 1);
 				
-//				displayItems();
-				
 				knownItemsDao.createKnownItem(text);
 				loadKnownItemsView();
-//				
-//				groceryListDao.createItem(text, 1);
-//				
-//				((AutoCompleteTextView)findViewById(R.id.actv)).setText("");
-//	
-//				List<GroceryItem> groceryItems = getGroceryList();
-//				ArrayAdapter<GroceryItem> adapter2 = new ArrayAdapter<GroceryItem>(view.getContext(), android.R.layout.simple_list_item_1, groceryItems);
-//				setListAdapter(adapter2);
 				displayItems();
 				break;
-			}
-			adapter.notifyDataSetChanged();
+		}
+		adapter.notifyDataSetChanged();
 	}
 	
 	@Override

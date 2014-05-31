@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-   
+          
         <item android:id="@+id/action_add"
           android:icon="@drawable/ic_new"
           android:title="@string/add_list"
@@ -14,5 +14,15 @@
         <item android:id="@+id/action_copy"
           android:icon="@drawable/ic_copy"
           android:title="@string/copy_list"
+          android:showAsAction="ifRoom"/>
+        
+        <item android:id="@+id/action_share1"
+          android:icon="@drawable/ic_share"
+          android:title="share lists"
+          android:showAsAction="ifRoom"/>
+        
+        <item android:id="@+id/action_cog"
+          android:icon="@drawable/ic_import_export"
+          android:title="@string/edit_settings"
           android:showAsAction="ifRoom"/>
 </menu>
