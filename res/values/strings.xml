@@ -153,4 +153,5 @@
         <item>vitamin D</item>
         <item>worchestershire sauce</item>
 	</string-array>
+        <string name="share_lists">share lists</string>
 </resources>
