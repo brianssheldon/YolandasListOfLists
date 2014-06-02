@@ -6,18 +6,24 @@
 
     <TextView
         android:id="@+id/itemTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical">
+       	android:layout_height="30sp"
+        android:layout_width="250sp"
+        android:gravity="left"
+        android:width="250sp"
+        android:textSize="18sp"
+        android:paddingLeft="6dp"
+        android:maxLines="1">
     </TextView>
 
     <TextView
         android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:text="@+id/TextView01"
-        android:textSize="36dp" >
+     	android:layout_height="30sp"
+        android:layout_width="250sp"
+        android:gravity="right"
+        android:width="10sp" 
+        android:textSize="18sp"
+        android:paddingRight="30dp">
     </TextView>
 
 </LinearLayout>

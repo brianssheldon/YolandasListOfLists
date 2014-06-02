@@ -45,7 +45,8 @@ public class DragNDropListActivity extends ListActivity
 	private String listNameToShow; 
 	
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.dragndroplistview);
@@ -63,7 +64,7 @@ public class DragNDropListActivity extends ListActivity
         		content.add(itemsInList.get(i).getItem());
         }
         
-        setListAdapter(new DragNDropAdapter(this, new int[]{R.layout.dragitem}, new int[]{R.id.TextView01}, content));//new DragNDropAdapter(this,content)
+        setListAdapter(new DragNDropAdapter(this, new int[]{R.layout.dragitem}, new int[]{R.id.itemTextView}, content));//new DragNDropAdapter(this,content)
         ListView listView = getListView();
         
         if (listView instanceof DragNDropListView) {
