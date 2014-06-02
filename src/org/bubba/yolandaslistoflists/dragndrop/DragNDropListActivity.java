@@ -17,27 +17,50 @@
 package org.bubba.yolandaslistoflists.dragndrop;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.bubba.yolandaslistoflists.OneListItem;
 import org.bubba.yolandaslistoflists.R;
+import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DragNDropListActivity extends ListActivity
 {
+	private ListOfListsDataSource datasource;
+	private String listNameToShow; 
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.dragndroplistview);
+
+        listNameToShow = (String) getIntent().getExtras().get(getString(R.string.listnametoshow));
         
-        ArrayList<String> content = new ArrayList<String>(mListContent.length);
-        for (int i=0; i < mListContent.length; i++) {
-        	content.add(mListContent[i]);
+        datasource = new ListOfListsDataSource(this);
+		datasource.open();
+		List<OneListItem> itemsInList = datasource.getAllItemsForOneListSortByNumber(listNameToShow);
+        
+        ArrayList<String> content = new ArrayList<String>(itemsInList.size());
+        for (int i=0; i < itemsInList.size(); i++)
+        {
+        	if(!"".equals(itemsInList.get(i).getItem()))
+        		content.add(itemsInList.get(i).getItem());
         }
         
         setListAdapter(new DragNDropAdapter(this, new int[]{R.layout.dragitem}, new int[]{R.id.TextView01}, content));//new DragNDropAdapter(this,content)
@@ -48,6 +71,10 @@ public class DragNDropListActivity extends ListActivity
         	((DragNDropListView) listView).setRemoveListener(mRemoveListener);
         	((DragNDropListView) listView).setDragListener(mDragListener);
         }
+        
+		getActionBar().show();
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 	private DropListener mDropListener = 
@@ -99,5 +126,86 @@ public class DragNDropListActivity extends ListActivity
     	
     };
     
-    private static String[] mListContent={"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7"};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.one_list_activity_actions, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+	    switch (item.getItemId())
+	    {
+			case R.id.action_discard:
+				deleteAllItemsOnList();
+				break;
+				
+			case R.id.action_share2:
+				break;
+	
+			case android.R.id.home:
+				finish();
+				break;
+				
+			case R.id.action_undo:
+				int lastDeleteNumber = datasource.undoDelete(listNameToShow);
+				
+				if(lastDeleteNumber == 0)
+				{
+					Toast.makeText(this, "\nSorry\n\nnothing to undo.\n\n", Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+//					displayItems();
+				}
+				break;
+				
+			case R.id.action_sort_toggle:
+				Intent oneListIntent = new Intent(getBaseContext(), DragNDropListActivity.class);
+				oneListIntent.putExtra(getString(R.string.listnametoshow), listNameToShow);
+		    	startActivityForResult(oneListIntent, 105);
+				break;
+				
+		    default:
+		    	return super.onOptionsItemSelected(item);
+	    }
+        return true;
+	}
+
+	private void deleteAllItemsOnList()
+	{
+		CharSequence[] items = new CharSequence[2];
+		items[0] = "Yes, please delete ALL Items on this list.";
+		items[1] = "Cancel";
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setIcon(android.R.drawable.ic_dialog_alert);
+		builder.setTitle("Delete list " + listNameToShow);
+		builder.setItems(items, new OnClickListener()
+		{
+			public void onClick(DialogInterface dialog, int which)
+			{
+				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+				
+				if(which == 0) // delete
+				{
+//					datasource.deleteAll(listNameToShow);
+//					displayItems();
+				}
+				else // cancel
+				{
+					return;
+				}
+			}
+		});
+		
+		AlertDialog alert = builder.create();
+		alert.show();
+		alert.getWindow().setLayout(400, 400);
+	}
+    
+//    private static String[] mListContent={"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7"};
 }

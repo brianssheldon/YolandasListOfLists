@@ -277,7 +277,14 @@ public class OneListActivity extends ListActivity
 	    }
         return true;
 	}
-
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		finish();
+	}
+	
 	private void deleteAllItemsOnList()
 	{
 		CharSequence[] items = new CharSequence[2];
@@ -291,7 +298,8 @@ public class OneListActivity extends ListActivity
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
-				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+//				@SuppressWarnings("unchecked")
+//				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
 				
 				if(which == 0) // delete
 				{
