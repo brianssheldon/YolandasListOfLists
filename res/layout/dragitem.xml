@@ -5,7 +5,7 @@
     android:orientation="horizontal" >
 
     <TextView
-        android:id="@+id/itemTextView"
+        android:id="@+id/oneItem"
        	android:layout_height="30sp"
         android:layout_width="250sp"
         android:gravity="left"
@@ -16,7 +16,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/oneQuantity"
         android:text="@+id/TextView01"
      	android:layout_height="30sp"
         android:layout_width="250sp"

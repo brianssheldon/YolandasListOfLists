@@ -17,6 +17,7 @@
 package org.bubba.yolandaslistoflists.dragndrop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bubba.yolandaslistoflists.OneListItem;
@@ -26,8 +27,8 @@ import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,7 +65,40 @@ public class DragNDropListActivity extends ListActivity
         		content.add(itemsInList.get(i).getItem());
         }
         
-        setListAdapter(new DragNDropAdapter(this, new int[]{R.layout.dragitem}, new int[]{R.id.itemTextView}, content));//new DragNDropAdapter(this,content)
+        ArrayList<HashMap<String, String>> mylist = new ArrayList<HashMap<String, String>>();
+		HashMap<String, String> map = null;
+		
+		for(OneListItem item : itemsInList)
+		{
+			if(!"".equals(item.getItem()))
+			{
+				map = new HashMap<String, String>();
+				map.put("oneItem", item.getItem());
+				map.put("oneQuantity", "" + item.getQuantity());
+				mylist.add(map);
+			}
+		}
+
+//		SimpleAdapter adapter = new SimpleAdapter(this,
+//			mylist, 
+//			R.layout.list_main_items,
+//          new String[] {"oneItem", "oneQuantity"}, 
+//          new int[] {R.id.oneItem, R.id..
+//		oneQuantity});
+
+        
+
+        DragNDropAdapter adapter = new DragNDropAdapter(this, 
+        	new int[]{R.layout.dragitem}, 
+			new String[] {"oneItem", "oneQuantity"}, 
+			new int[] {R.id.oneItem, R.id.oneQuantity},
+        	mylist);
+//        DragNDropAdapter adapter = new DragNDropAdapter(this, 
+//            	new int[]{R.layout.dragitem}, 
+//            	new int[]{R.id.itemTextView}, 
+//            	content);
+		
+        setListAdapter(adapter);//new DragNDropAdapter(this,content)
         ListView listView = getListView();
         
         if (listView instanceof DragNDropListView) {
@@ -114,14 +148,14 @@ public class DragNDropListActivity extends ListActivity
 				itemView.setVisibility(View.INVISIBLE);
 				defaultBackgroundColor = itemView.getDrawingCacheBackgroundColor();
 				itemView.setBackgroundColor(backgroundColor);
-				TextView iv = (TextView)itemView.findViewById(R.id.itemTextView);
+				TextView iv = (TextView)itemView.findViewById(R.id.oneItem);
 				if (iv != null) iv.setVisibility(View.INVISIBLE);
 			}
 
 			public void onStopDrag(View itemView) {
 				itemView.setVisibility(View.VISIBLE);
 				itemView.setBackgroundColor(defaultBackgroundColor);
-				TextView iv = (TextView)itemView.findViewById(R.id.itemTextView);
+				TextView iv = (TextView)itemView.findViewById(R.id.oneItem);
 				if (iv != null) iv.setVisibility(View.VISIBLE);
 			}
     	

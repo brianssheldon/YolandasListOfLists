@@ -162,7 +162,9 @@ public class OneListActivity extends ListActivity
 			}
 		}
 
-		SimpleAdapter adapter = new SimpleAdapter(this, mylist, R.layout.list_main_items,
+		SimpleAdapter adapter = new SimpleAdapter(this, 
+			mylist, 
+			R.layout.list_main_items,
             new String[] {"oneItem", "oneQuantity"}, 
             new int[] {R.id.oneItem, R.id.oneQuantity});
 
