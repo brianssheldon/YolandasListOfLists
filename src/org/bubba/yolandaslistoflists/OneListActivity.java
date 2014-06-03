@@ -32,7 +32,7 @@ public class OneListActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
-	private String listNameToShow; 
+	public static String listNameToShow; 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bubba.yolandaslistoflists.OneListActivity;
 import org.bubba.yolandaslistoflists.OneListItem;
 import org.bubba.yolandaslistoflists.R;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
@@ -114,10 +115,10 @@ public class DragNDropListActivity extends ListActivity
 
 	private DropListener mDropListener = 
 		new DropListener() {
-        public void onDrop(int from, int to) {
+        public void onDrop(int from, int to, String listNameToShow) {
         	ListAdapter adapter = getListAdapter();
         	if (adapter instanceof DragNDropAdapter) {
-        		((DragNDropAdapter)adapter).onDrop(from, to);
+        		((DragNDropAdapter)adapter).onDrop(from, to, listNameToShow);
         		getListView().invalidateViews();
         	}
         }

@@ -45,12 +45,14 @@ public class ListOfListsDataSource
 
 	public OneListItem createComment(String listName, String item, int quantity)
 	{
+		int nextNbr = getBiggestSortOnThisNumber(listName) + 1;
+		
 		ContentValues values = new ContentValues();
 		values.put(YolandasSqlHelper.COLUMN_LIST_NAME, listName);
 		values.put(YolandasSqlHelper.COLUMN_ITEM, item);
 		values.put(YolandasSqlHelper.COLUMN_QUANTITY, quantity);
 		values.put(YolandasSqlHelper.COLUMN_DELETED_NUMBER, 0);
-		values.put(YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER, 0);
+		values.put(YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER, nextNbr);
 		
 		long insertId = database.insert(YolandasSqlHelper.LIST_OF_LISTS_TABLE, null, values);
 		
@@ -203,8 +205,8 @@ public class ListOfListsDataSource
 
 		String sqlStmt = "UPDATE " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
 				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + nextDeleteNumber + "' "
-		    		+ "where listName = '" + listNameToShow + "'"
-		    		+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0'";
+				+ "where " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'"
+	    		+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0'";
 		
 		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
 
@@ -220,8 +222,8 @@ public class ListOfListsDataSource
 		
 		String sqlStmt = "UPDATE " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
 				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '0' "
-		    		+ "where listName = '" + listNameToShow + "'"
-		    		+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + lastDeleteNumber + "'";
+				+ "where " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'"
+		    	+ " and " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + lastDeleteNumber + "'";
 		
 		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
 
@@ -235,8 +237,8 @@ public class ListOfListsDataSource
 		
 		String sqlStmt = "UPDATE " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
 				+ " set " + YolandasSqlHelper.COLUMN_DELETED_NUMBER + " = '" + nextDeleteNumber + "' "
-		    		+ "where listName = '" + listNameToShow + "'"
-		    		+ " and item = '" + item + "'";
+	    		+ "where " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'"
+	    		+ " and item = '" + item + "'";
 		
 		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
 
@@ -244,11 +246,23 @@ public class ListOfListsDataSource
 		stmt.executeUpdateDelete();
 	}
 
+	private int getBiggestSortOnThisNumber(String listNameToShow)
+	{
+	    String sqlStmt = "SELECT MAX("+ YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER
+	    	+ ") FROM " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
+	    	+ " where " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'";
+	    
+		final SQLiteStatement stmt = database.compileStatement(
+	    	sqlStmt);
+
+	    return (int) stmt.simpleQueryForLong();
+	}
+
 	private int getBiggestDeleteNumber(String listNameToShow)
 	{
 	    String sqlStmt = "SELECT MAX("+ YolandasSqlHelper.COLUMN_DELETED_NUMBER
-	    		+ ") FROM " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
-			+ " where listName = '" + listNameToShow + "'";
+    		+ ") FROM " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
+    		+ " where " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'";
 	    
 		final SQLiteStatement stmt = database.compileStatement(
 	    	sqlStmt);
@@ -294,6 +308,19 @@ public class ListOfListsDataSource
 		
 		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
 
+		int recordsUpdated = stmt.executeUpdateDelete();
+		return recordsUpdated;
+	}
+
+	public int updateSortByThisNumber(String listNameToShow, String item, int newNbr)
+	{
+		String sqlStmt = "UPDATE " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
+			+ " set " + YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER + " = '" + newNbr + "' "
+			+ "where " + YolandasSqlHelper.COLUMN_ITEM + " = '" + item + "' "
+			+ "and " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'";
+	
+		final SQLiteStatement stmt = database.compileStatement(sqlStmt );
+		
 		int recordsUpdated = stmt.executeUpdateDelete();
 		return recordsUpdated;
 	}

@@ -16,6 +16,8 @@
 
 package org.bubba.yolandaslistoflists.dragndrop;
 
+import org.bubba.yolandaslistoflists.OneListActivity;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
@@ -93,7 +95,7 @@ public class DragNDropListView extends ListView {
 				mEndPosition = pointToPosition(x,y);
 				stopDrag(mStartPosition - getFirstVisiblePosition());
 				if (mDropListener != null && mStartPosition != INVALID_POSITION && mEndPosition != INVALID_POSITION) 
-	        		 mDropListener.onDrop(mStartPosition, mEndPosition);
+	        		 mDropListener.onDrop(mStartPosition, mEndPosition, OneListActivity.listNameToShow);
 				break;
 		}
 		return true;

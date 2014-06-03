@@ -19,6 +19,8 @@ package org.bubba.yolandaslistoflists.dragndrop;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +36,7 @@ public final class DragNDropAdapter extends BaseAdapter implements RemoveListene
     private LayoutInflater mInflater;
 //    private ArrayList<String> mContent;
     private ArrayList<HashMap<String, String>> mContent;
+	private ListOfListsDataSource datasource;
 
 //    public DragNDropAdapter(Context context, ArrayList<String> content) {
 //        init(context,new int[]{android.R.layout.simple_list_item_1},new int[]{android.R.id.text1}, content);
@@ -72,7 +75,8 @@ public final class DragNDropAdapter extends BaseAdapter implements RemoveListene
     	mIds = ids;
     	this.itemNames = itemNames;
     	mLayouts = layouts;
-    	mContent = content;
+    	mContent = content; datasource = new ListOfListsDataSource(context);
+		datasource.open();
     }
 
 //    private void init(Context context, 
@@ -177,9 +181,13 @@ public final class DragNDropAdapter extends BaseAdapter implements RemoveListene
 		mContent.remove(which);
 	}
 
-	public void onDrop(int from, int to) {
-		HashMap<String, String> temp = mContent.get(from);//.get(itemNames[0]);
+	public void onDrop(int from, int to, String listNameToShow)
+	{
+		HashMap<String, String> fromMap = mContent.get(from);
+		HashMap<String, String> toMap = mContent.get(to);
 		mContent.remove(from);
-		mContent.add(to,temp);
+		mContent.add(to,fromMap);
+		datasource.updateSortByThisNumber(listNameToShow, fromMap.get("oneItem"), to);
+		datasource.updateSortByThisNumber(listNameToShow, toMap.get("oneItem"), from);
 	}
 }

@@ -30,5 +30,5 @@ public interface DropListener {
 	 * @param from - index item started at.
 	 * @param to - index to place item at.
 	 */
-	void onDrop(int from, int to);
+	void onDrop(int from, int to, String listNameToShow);
 }
