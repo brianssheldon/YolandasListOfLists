@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+   
+        <item android:id="@+id/action_discard"
+          android:icon="@drawable/ic_discard"
+          android:title="@string/delete_all_items"
+          android:showAsAction="ifRoom"/>
+   
+        <item android:id="@+id/action_undo"
+          android:icon="@drawable/ic_undo"
+          android:title="@string/undo"
+          android:showAsAction="ifRoom"/>
+          
+        <item android:id="@+id/action_sort_toggle"
+          android:icon="@drawable/ic_cog"
+          android:title="@string/switch_from_dragable_to_sorted"
+          android:showAsAction="ifRoom"/>
+        
+        <item android:id="@+id/action_share2"
+          android:icon="@drawable/ic_share"
+          android:title="@string/share_list"
+          android:showAsAction="ifRoom"/>
+        
+</menu>

@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bubba.yolandaslistoflists.dragndrop.DragNDropListActivity;
+import org.bubba.yolandaslistoflists.prefs.PrefsBO;
+import org.bubba.yolandaslistoflists.prefs.PrefsDao;
 import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
@@ -13,8 +15,8 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -269,6 +271,10 @@ public class OneListActivity extends ListActivity
 				break;
 				
 			case R.id.action_sort_toggle:
+				PrefsBO bo = PrefsDao.readFile(getBaseContext());
+				bo.setOneListSort(PrefsBO.DRAG_SORT_ORDER);
+				PrefsDao.writeFile(bo, getBaseContext());
+				
 				Intent oneListIntent = new Intent(getBaseContext(), DragNDropListActivity.class);
 				oneListIntent.putExtra(getString(R.string.listnametoshow), listNameToShow);
 		    	startActivityForResult(oneListIntent, 105);

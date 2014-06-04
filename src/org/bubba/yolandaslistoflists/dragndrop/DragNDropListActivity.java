@@ -23,6 +23,8 @@ import java.util.List;
 import org.bubba.yolandaslistoflists.OneListActivity;
 import org.bubba.yolandaslistoflists.OneListItem;
 import org.bubba.yolandaslistoflists.R;
+import org.bubba.yolandaslistoflists.prefs.PrefsBO;
+import org.bubba.yolandaslistoflists.prefs.PrefsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
 import android.app.AlertDialog;
@@ -44,7 +46,7 @@ import android.widget.Toast;
 public class DragNDropListActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
-	private String listNameToShow; 
+	public static String listNameToShow; 
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -80,26 +82,13 @@ public class DragNDropListActivity extends ListActivity
 			}
 		}
 
-//		SimpleAdapter adapter = new SimpleAdapter(this,
-//			mylist, 
-//			R.layout.list_main_items,
-//          new String[] {"oneItem", "oneQuantity"}, 
-//          new int[] {R.id.oneItem, R.id..
-//		oneQuantity});
-
-        
-
         DragNDropAdapter adapter = new DragNDropAdapter(this, 
         	new int[]{R.layout.dragitem}, 
 			new String[] {"oneItem", "oneQuantity"}, 
 			new int[] {R.id.oneItem, R.id.oneQuantity},
         	mylist);
-//        DragNDropAdapter adapter = new DragNDropAdapter(this, 
-//            	new int[]{R.layout.dragitem}, 
-//            	new int[]{R.id.itemTextView}, 
-//            	content);
 		
-        setListAdapter(adapter);//new DragNDropAdapter(this,content)
+        setListAdapter(adapter);
         ListView listView = getListView();
         
         if (listView instanceof DragNDropListView) {
@@ -159,14 +148,14 @@ public class DragNDropListActivity extends ListActivity
 				TextView iv = (TextView)itemView.findViewById(R.id.oneItem);
 				if (iv != null) iv.setVisibility(View.VISIBLE);
 			}
-    	
     };
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 	    MenuInflater inflater = getMenuInflater();
-	    inflater.inflate(R.menu.one_list_activity_actions, menu);
+	    inflater.inflate(R.menu.dnd_activity_actions, menu);
+	    
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -200,15 +189,26 @@ public class DragNDropListActivity extends ListActivity
 				break;
 				
 			case R.id.action_sort_toggle:
-				Intent oneListIntent = new Intent(getBaseContext(), DragNDropListActivity.class);
+				PrefsBO bo = PrefsDao.readFile(getBaseContext());
+				bo.setOneListSort(PrefsBO.ALPHA_SORT_ORDER);
+				PrefsDao.writeFile(bo, getBaseContext());
+				
+				Intent oneListIntent = new Intent(getBaseContext(), OneListActivity.class);
 				oneListIntent.putExtra(getString(R.string.listnametoshow), listNameToShow);
-		    	startActivityForResult(oneListIntent, 105);
+		    	startActivityForResult(oneListIntent, 106);
 				break;
 				
 		    default:
 		    	return super.onOptionsItemSelected(item);
 	    }
         return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{	// called when returning from an intent
+		super.onActivityResult(requestCode, resultCode, data);
+		finish();
 	}
 
 	private void deleteAllItemsOnList()
@@ -242,6 +242,4 @@ public class DragNDropListActivity extends ListActivity
 		alert.show();
 		alert.getWindow().setLayout(400, 400);
 	}
-    
-//    private static String[] mListContent={"Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7"};
 }

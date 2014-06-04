@@ -154,4 +154,5 @@
         <item>worchestershire sauce</item>
 	</string-array>
         <string name="share_lists">share lists</string>
+        <string name="switch_from_dragable_to_sorted">switch from dragable to sorted</string>
 </resources>

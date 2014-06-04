@@ -2,6 +2,9 @@ package org.bubba.yolandaslistoflists;
 
 import java.util.List;
 
+import org.bubba.yolandaslistoflists.dragndrop.DragNDropListActivity;
+import org.bubba.yolandaslistoflists.prefs.PrefsBO;
+import org.bubba.yolandaslistoflists.prefs.PrefsDao;
 import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
@@ -121,9 +124,18 @@ public class MainActivity extends ListActivity
 			{
 				final OneListItem oneListItemBO2 = (OneListItem) getListAdapter().getItem(arg2);
 				
-				Intent oneListIntent = new Intent(arg0.getContext(), OneListActivity.class);
-				oneListIntent.putExtra(getString(R.string.listnametoshow), oneListItemBO2.getListName());
-		    	startActivityForResult(oneListIntent, 101);
+				if(PrefsBO.ALPHA_SORT_ORDER.equals(PrefsDao.readFile(arg0.getContext()).getOneListSort()))
+				{
+					Intent oneListIntent = new Intent(arg0.getContext(), OneListActivity.class);
+					oneListIntent.putExtra(getString(R.string.listnametoshow), oneListItemBO2.getListName());
+			    	startActivityForResult(oneListIntent, 101);
+				}
+				else
+				{
+					Intent dndIntent = new Intent(arg0.getContext(), DragNDropListActivity.class);
+					dndIntent.putExtra(getString(R.string.listnametoshow), oneListItemBO2.getListName());
+			    	startActivityForResult(dndIntent, 102);
+				}
 			}
 		};
 		return listViewOnClickListener;
