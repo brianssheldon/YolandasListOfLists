@@ -7,7 +7,7 @@ public class OneListItem
 	private String item;
 	private int quantity;
 	private int deletedNumber;
-	private int sortOnThisNumber;
+	private String sortOnThisNumber;
 
 	public OneListItem()
 	{
@@ -15,7 +15,7 @@ public class OneListItem
 		item = "";
 		quantity = 0;
 		deletedNumber = 0;
-		sortOnThisNumber = 0;
+		sortOnThisNumber = "0";
 	}
 	
 	public OneListItem(String newName)
@@ -24,7 +24,7 @@ public class OneListItem
 		item = "";
 		quantity = 0;
 		deletedNumber = 0;
-		sortOnThisNumber = 0;
+		sortOnThisNumber = "0";
 	}
 
 	public String getListName()
@@ -94,12 +94,12 @@ public class OneListItem
 		this.deletedNumber = deletedNumber;
 	}
 
-	public int getSortOnThisNumber()
+	public String getSortOnThisNumber()
 	{
 		return sortOnThisNumber;
 	}
 
-	public void setSortOnThisNumber(int sortOnThisNumber)
+	public void setSortOnThisNumber(String sortOnThisNumber)
 	{
 		this.sortOnThisNumber = sortOnThisNumber;
 	}

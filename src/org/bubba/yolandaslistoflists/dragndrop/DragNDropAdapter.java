@@ -18,6 +18,7 @@ package org.bubba.yolandaslistoflists.dragndrop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
@@ -187,7 +188,19 @@ public final class DragNDropAdapter extends BaseAdapter implements RemoveListene
 		HashMap<String, String> toMap = mContent.get(to);
 		mContent.remove(from);
 		mContent.add(to,fromMap);
-		datasource.updateSortByThisNumber(listNameToShow, fromMap.get("oneItem"), to);
-		datasource.updateSortByThisNumber(listNameToShow, toMap.get("oneItem"), from);
+//		datasource.updateSortByThisNumber(listNameToShow, fromMap.get("oneItem"), to);
+//		datasource.updateSortByThisNumber(listNameToShow, toMap.get("oneItem"), from);
+		int counter = 0;
+		
+		for (Iterator iterator = mContent.iterator(); iterator.hasNext();)
+		{
+			HashMap<String,String> map = (HashMap) iterator.next();
+			
+			String item = map.get("oneItem");
+			String qty = map.get("oneQuantity");
+			
+			datasource.updateSortByThisNumber(listNameToShow, item, counter);
+			counter +=1;			
+		}
 	}
 }

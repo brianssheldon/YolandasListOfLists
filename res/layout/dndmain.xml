@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/dndtv"
+        android:width="350sp"
+        android:layout_width="350sp"
+        android:layout_height="0dp"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+
+    <Button
+        android:id="@+id/dndadd"
+        android:layout_width="10dp"
+        android:width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/dndtv"
+        android:onClick="onClick"
+        android:text="@string/add_new"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/dndactv"
+        android:layout_width="250dip"
+        android:layout_height="wrap_content"
+        android:width="250dp"/>
+
+    <TextView
+        android:id="@+id/dndignoreme"
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:text="    "
+        android:layout_below="@id/dndadd"/>
+    
+
+    <org.bubba.yolandaslistoflists.dragndrop.DragNDropListView
+        android:id="@+id/android:list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_below="@id/dndignoreme">
+    </org.bubba.yolandaslistoflists.dragndrop.DragNDropListView>
+    
+</RelativeLayout>

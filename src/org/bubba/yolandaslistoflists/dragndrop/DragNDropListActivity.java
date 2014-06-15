@@ -18,15 +18,19 @@ package org.bubba.yolandaslistoflists.dragndrop;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import org.bubba.yolandaslistoflists.KnownItem;
 import org.bubba.yolandaslistoflists.OneListActivity;
 import org.bubba.yolandaslistoflists.OneListItem;
 import org.bubba.yolandaslistoflists.R;
 import org.bubba.yolandaslistoflists.prefs.PrefsBO;
 import org.bubba.yolandaslistoflists.prefs.PrefsDao;
+import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -37,7 +41,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +53,7 @@ import android.widget.Toast;
 public class DragNDropListActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
+	private KnownItemsDao knownItemsDao;
 	public static String listNameToShow; 
 	
     @Override
@@ -53,12 +61,99 @@ public class DragNDropListActivity extends ListActivity
     {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.dragndroplistview);
+        setContentView(R.layout.dndmain);//R.layout.dragndroplistview);
 
         listNameToShow = (String) getIntent().getExtras().get(getString(R.string.listnametoshow));
         
-        datasource = new ListOfListsDataSource(this);
-		datasource.open();
+        openDb();
+		
+		loadKnownItemsView();
+		createDndList();
+        
+		getActionBar().show();
+		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+	private void openDb()
+	{
+		if(datasource == null) 
+		{
+			datasource = new ListOfListsDataSource(this);
+			datasource.open();
+		}
+		
+		if(knownItemsDao == null)
+		{
+			knownItemsDao = new KnownItemsDao(this);
+			knownItemsDao.open();
+		}
+	}
+
+	@SuppressLint("NewApi")
+	private void loadKnownItemsView()
+	{
+		List<KnownItem> knownItems = getKnownItems();
+		String[] knownArray = new String[knownItems.size()];
+		int i = 0;
+		for (Iterator<KnownItem> iterator = knownItems.iterator(); iterator.hasNext();)
+		{
+			knownArray[i] = ((KnownItem) iterator.next()).getItem();
+			i ++;
+		}
+
+	   ArrayAdapter<String> adapter2 = 
+	         new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, knownArray);
+	   
+	   AutoCompleteTextView actvDev = (AutoCompleteTextView)findViewById(R.id.dndactv);
+	   actvDev.setThreshold(1);
+	   actvDev.setAdapter(adapter2);
+
+	   actvDev.setOnItemClickListener(new AutoCompleteListener());
+	}
+
+    private final class AutoCompleteListener implements OnItemClickListener
+	{
+		public void onItemClick(AdapterView<?> parent, View textView, int position, long id)
+		{	// they have selected an item from the dropdown list. add it to the grocery list
+			if(textView == null
+				|| ((TextView)textView).getText() == null
+				|| ((TextView)textView).getText().toString() == "") return;
+			
+			String name = ((TextView)textView).getText().toString(); // get selected item
+			
+			datasource.createComment(listNameToShow, name, 1);
+			
+//			groceryListDao.createItem(name, 1);
+
+			((AutoCompleteTextView)findViewById(R.id.dndactv)).setText("");
+
+			createDndList();
+		}
+	}
+    
+	private List<KnownItem> getKnownItems()
+	{
+		List<KnownItem> values = knownItemsDao.getAllItems();
+		
+		if(values != null && values.size() > 0) 
+		{
+			return values; // the table is already loaded. don't load it again.
+		}
+		
+		String[] hardCodedItems = getResources().getStringArray(R.array.food_array);
+		
+		for (int i = 0; i < hardCodedItems.length; i++)
+		{
+			knownItemsDao.createKnownItem(hardCodedItems[i]);
+		}
+		
+		values = knownItemsDao.getAllItems();
+		return values;
+	}
+
+	private void createDndList()
+	{
 		List<OneListItem> itemsInList = datasource.getAllItemsForOneListSortByNumber(listNameToShow);
         
         ArrayList<String> content = new ArrayList<String>(itemsInList.size());
@@ -96,11 +191,66 @@ public class DragNDropListActivity extends ListActivity
         	((DragNDropListView) listView).setRemoveListener(mRemoveListener);
         	((DragNDropListView) listView).setDragListener(mDragListener);
         }
-        
-		getActionBar().show();
-		getActionBar().setHomeButtonEnabled(true);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+		listView.setOnItemClickListener(getItemClickListener());
+	}
+
+	private OnItemClickListener getItemClickListener()
+	{
+		OnItemClickListener listViewOnClickListener = new OnItemClickListener()
+		{
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				final AdapterView adapterView = arg0; 
+				@SuppressWarnings("unchecked")
+				HashMap<String,String> map = (HashMap<String,String>)getListAdapter().getItem(arg2);
+
+				if(map == null) return;
+				
+				final String item = (String) map.get("oneItem");
+				
+		        CharSequence[] items = new CharSequence[103];
+		        items[0] = "Delete Item '" + item + "' ?";
+		        items[1] = "Cancel";
+		        for (int i = 0; i < 101; i++) items[i+2]=""+(i+1);
+
+		        AlertDialog.Builder builder = new AlertDialog.Builder(arg0.getContext());
+		        builder.setIcon(android.R.drawable.ic_dialog_alert);
+		        builder.setTitle("Delete Item '" + item + "'");
+		        builder.setItems(items, new OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int which)
+					{
+						if(which == 0)
+						{
+							datasource.deleteComment(listNameToShow, item);
+						}
+						else if(which == 1)
+						{
+//							displayItems();
+						}
+						else if(which > 1)
+						{
+							OneListItem oneItem = datasource.getItem(listNameToShow, item);
+							oneItem.setQuantity(which - 1);
+							int rowsUpdated = datasource.updateItem(oneItem);
+							
+							if(rowsUpdated == 0) 
+							{
+								Toast.makeText(adapterView.getContext(), "\nSorry\n\nupdate failed.\n\n", Toast.LENGTH_LONG).show();
+							}
+						}
+
+						createDndList();
+					}
+				});
+		        
+		        AlertDialog alert = builder.create();
+		        alert.show();
+		        alert.getWindow().setLayout(400, 600);
+			}
+		};
+		return listViewOnClickListener;
+	}
 
 	private DropListener mDropListener = 
 		new DropListener() {
@@ -184,7 +334,7 @@ public class DragNDropListActivity extends ListActivity
 				}
 				else
 				{
-//					displayItems();
+					createDndList();
 				}
 				break;
 				
@@ -210,6 +360,30 @@ public class DragNDropListActivity extends ListActivity
 		super.onActivityResult(requestCode, resultCode, data);
 		finish();
 	}
+	
+	public void onClick(View view)
+	{
+		DragNDropAdapter adapter = (DragNDropAdapter) getListAdapter();
+		
+		switch (view.getId())
+		{
+			case R.id.dndadd:
+				AutoCompleteTextView tv = (AutoCompleteTextView)findViewById(R.id.dndactv);
+				String text = tv.getText().toString();
+				
+				if(text == null || text.trim().length() == 0) return;
+				
+				tv.setText("");
+				
+				datasource.createComment(listNameToShow, text, 1);
+				
+				knownItemsDao.createKnownItem(text);
+				loadKnownItemsView();
+				createDndList();
+				break;
+		}
+		adapter.notifyDataSetChanged();
+	}
 
 	private void deleteAllItemsOnList()
 	{
@@ -224,12 +398,10 @@ public class DragNDropListActivity extends ListActivity
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
-				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
-				
 				if(which == 0) // delete
 				{
-//					datasource.deleteAll(listNameToShow);
-//					displayItems();
+					datasource.deleteAll(listNameToShow);
+					createDndList();
 				}
 				else // cancel
 				{

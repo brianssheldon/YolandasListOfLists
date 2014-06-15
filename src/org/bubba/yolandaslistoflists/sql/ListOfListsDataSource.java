@@ -52,7 +52,7 @@ public class ListOfListsDataSource
 		values.put(YolandasSqlHelper.COLUMN_ITEM, item);
 		values.put(YolandasSqlHelper.COLUMN_QUANTITY, quantity);
 		values.put(YolandasSqlHelper.COLUMN_DELETED_NUMBER, 0);
-		values.put(YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER, nextNbr);
+		values.put(YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER, getNbr(nextNbr));
 		
 		long insertId = database.insert(YolandasSqlHelper.LIST_OF_LISTS_TABLE, null, values);
 		
@@ -173,7 +173,7 @@ public class ListOfListsDataSource
 		comment.setItem(cursor.getString(2));
 		comment.setQuantity(Integer.parseInt(cursor.getString(3)));
 		comment.setDeletedNumber(Integer.parseInt(cursor.getString(4)));
-		comment.setSortOnThisNumber(Integer.parseInt(cursor.getString(5)));
+		comment.setSortOnThisNumber(cursor.getString(5));
 		return comment;
 	}
 
@@ -315,7 +315,7 @@ public class ListOfListsDataSource
 	public int updateSortByThisNumber(String listNameToShow, String item, int newNbr)
 	{
 		String sqlStmt = "UPDATE " + YolandasSqlHelper.LIST_OF_LISTS_TABLE
-			+ " set " + YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER + " = '" + newNbr + "' "
+			+ " set " + YolandasSqlHelper.COLUMN_SORT_ON_THIS_NUMBER + " = '" + getNbr(newNbr) + "' "
 			+ "where " + YolandasSqlHelper.COLUMN_ITEM + " = '" + item + "' "
 			+ "and " + YolandasSqlHelper.COLUMN_LIST_NAME + " = '" + listNameToShow + "'";
 	
@@ -323,5 +323,14 @@ public class ListOfListsDataSource
 		
 		int recordsUpdated = stmt.executeUpdateDelete();
 		return recordsUpdated;
+	}
+
+	private String getNbr(int newNbr)
+	{
+		String nbr = "000000" + newNbr; 
+				
+		String substring = nbr.substring(("" + newNbr).length());
+		System.err.println("blah '" + substring + "'");
+		return substring;
 	}
 }
