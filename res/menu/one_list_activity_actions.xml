@@ -10,12 +10,12 @@
           android:icon="@drawable/ic_undo"
           android:title="@string/undo"
           android:showAsAction="ifRoom"/>
-          
+
         <item android:id="@+id/action_sort_toggle"
           android:icon="@drawable/ic_cog"
           android:title="@string/switch_from_sorted_to_dragable"
           android:showAsAction="ifRoom"/>
-        
+
         <item android:id="@+id/action_share2"
           android:icon="@drawable/ic_share"
           android:title="@string/share_list"

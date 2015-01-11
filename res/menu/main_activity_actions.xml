@@ -20,9 +20,14 @@
           android:icon="@drawable/ic_share"
           android:title="@string/share_lists"
           android:showAsAction="ifRoom"/>
-        
-        <item android:id="@+id/action_cog"
-          android:icon="@drawable/ic_import_export"
-          android:title="@string/edit_settings"
-          android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_cog"
+        android:icon="@drawable/ic_import_export"
+        android:title="@string/edit_settings"
+        android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_edit_known_items"
+        android:icon="@drawable/ic_import_export"
+        android:title="edit items"
+        android:showAsAction="ifRoom"/>
 </menu>

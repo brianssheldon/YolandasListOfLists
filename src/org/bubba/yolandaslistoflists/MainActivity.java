@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +35,21 @@ public class MainActivity extends ListActivity
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
 	private OneListItem oneListItemBO = null;
+    private String newName;
+
+    DisplayMetrics metrics = new DisplayMetrics();
+    public int height = 600;
+    public int wwidth = 400;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        height = metrics.heightPixels;
+        wwidth = metrics.widthPixels;
 
 		datasource = new ListOfListsDataSource(this);
 		datasource.open();
@@ -58,7 +69,7 @@ public class MainActivity extends ListActivity
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
 		getListView().setOnItemLongClickListener(getOnItemLongClickListener());
-		
+
 		getActionBar().show();
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -82,7 +93,23 @@ public class MainActivity extends ListActivity
 			break;
 			
 		case R.id.action_add:
-			alertDialogAddList();
+			String thenewname = alertDialogAddList();
+
+//            OneListItem oneListItemBO2;
+//
+//            for (int i = 0; i < getListView().getCount(); i++) {
+//                oneListItemBO2 = (OneListItem) getListAdapter().getItem(i);
+//
+//                System.err.println("blah '" + thenewname + "'  '" + oneListItemBO2.getListName() + "'  " + i);
+//
+//                if (thenewname.equals(oneListItemBO2.getListName())) {
+//                    ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+//                    TextView view = (TextView) adapter.getView(i, null, null);
+//                    view.callOnClick();
+//                    break;
+//                }
+//            }
+
 			break;
 			
 		case R.id.action_discard:
@@ -95,17 +122,23 @@ public class MainActivity extends ListActivity
 			}
 			discardList(getListView(), oneListItemBO);
 			break;
-			
-		case R.id.action_copy:
-			if(oneListItemBO == null)
-			{
-				Toast.makeText(getBaseContext(), 
-						"'Long Press' a list to Copy",
-						Toast.LENGTH_SHORT).show();
-				break;
-			}
-			alertDialogCopy(oneListItemBO.getListName());
-			break;
+
+            case R.id.action_copy:
+                if(oneListItemBO == null)
+                {
+                    Toast.makeText(getBaseContext(),
+                            "'Long Press' a list to Copy",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                alertDialogCopy(oneListItemBO.getListName());
+                break;
+
+            case R.id.action_edit_known_items:
+                Intent editKnownItemsIntent = new Intent(getBaseContext(), EditKnownItemsActivity.class);
+                startActivityForResult(editKnownItemsIntent, 151);
+                break;
 	 
 	    default:
 	        return super.onOptionsItemSelected(item);
@@ -176,7 +209,7 @@ public class MainActivity extends ListActivity
 			final OneListItem oneListItemBO)
 	{
 		CharSequence[] items = new CharSequence[2];
-		items[0] = "Delete Item   '" + oneListItemBO.getListName() + "' ?";
+		items[0] = "Delete Item   \n'" + oneListItemBO.getListName() + "' ?";
 		items[1] = "Cancel";
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(arg0.getContext());
@@ -200,10 +233,13 @@ public class MainActivity extends ListActivity
 				}
 			}
 		});
-		
-		AlertDialog alert = builder.create();
-		alert.show();
-		alert.getWindow().setLayout(400, 400);
+
+        int lheight = (int) (height * .66);
+        int lwwidth = (int) (wwidth * .66);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        alert.getWindow().setLayout(lwwidth, lheight);
 	}
 	
 	void alertDialogCopy(final String listNameToCopy)
@@ -266,7 +302,7 @@ public class MainActivity extends ListActivity
         alertDialog.show();
 	}
 
-	void alertDialogAddList()
+	String alertDialogAddList()
 	{
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 
@@ -305,24 +341,38 @@ public class MainActivity extends ListActivity
         });
 
         // Setting Positive "Yes" Button
-        alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) 
-            {
-        		ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
-        		
-        		String newName = et.getText().toString();
-        		
-        		if(null == newName || "".equals(newName)) return;
-        		
-				datasource.createComment(newName, "", 0);
-				adapter.add(new OneListItem(newName));
+        AlertDialog.Builder ok = alertDialogBuilder.setPositiveButton("OK", new OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
+
+                newName = et.getText().toString();
+
+                if (null == newName || "".equals(newName)) return;
+
+                datasource.createComment(newName, "", 0);
+                adapter.add(new OneListItem(newName));
 //				adapter.notifyDataSetChanged();
-				displayList();
+                displayList();
+//
+//                OneListItem oneListItemBO2;
+//
+//                for (int i = 0; i < getListView().getCount(); i++) {
+//                    oneListItemBO2 = (OneListItem) getListAdapter().getItem(i);
+//
+//                    System.err.println("blah '" + newName + "'  '" + oneListItemBO2.getListName() + "'  " + i);
+//
+//                    if (newName.equals(oneListItemBO2.getListName())) {
+//                        TextView view = (TextView) adapter.getView(i, null, null);
+//                        view.callOnClick();
+//                        break;
+//                    }
+//                }
             }
         });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+        return newName;
 	}
 	
 	@Override

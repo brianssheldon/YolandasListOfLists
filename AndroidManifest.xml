@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".OneListActivity" />
         <activity android:name="org.bubba.yolandaslistoflists.dragndrop.DragNDropListActivity" />
+        <activity android:name=".EditKnownItemsActivity" />
     </application>
 
 </manifest>

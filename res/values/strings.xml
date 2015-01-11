@@ -19,57 +19,142 @@
     <string name="edit_settings">edit settings</string>
 
     <string-array name="food_array">
+        <item>3m strips</item>
+        <item>9v batteries</item>
+        <item>9 volt batteries</item>
+        <item>aaa batteries</item>
+        <item>AA batteries</item>
+        <item>activia yogurt</item>
+        <item>adams beef fajita seasoning</item>
+        <item>air filter 14x24x1</item>
+        <item>ajax - comet</item>
+        <item>alcohol swabs</item>
         <item>alfredo sauce</item>
+        <item>alka seltzer</item>
+        <item>almonds</item>
         <item>apple sauce</item>
+        <item>azo standard</item>
+        <item>backpack</item>
         <item>bacon</item>
+        <item>bagels - everything thin</item>
         <item>beer</item>
         <item>beets</item>
+        <item>bell pepper</item>
+        <item>birthday card</item>
+        <item>biscuits</item>
+        <item>black beans</item>
+        <item>blackberries</item>
         <item>black pepper</item>
         <item>bleach</item>
+        <item>body wash suave moisturizing</item>
+        <item>books</item>
+        <item>bottle</item>
         <item>bread</item>
+        <item>broccoli</item>
+        <item>butter - blue bonnet</item>
+        <item>butter milk</item>
         <item>butter - parkay</item>
         <item>butter - real</item>
         <item>butter - spray</item>
         <item>canadian bacon</item>
-        <item>cantelope</item>
-        <item>carrots - raw</item>
+        <item>candy</item>
+        <item>can of cheese</item>
+        <item>canola oil</item>
+        <item>cantaloupe</item>
+        <item>car charger splitter</item>
         <item>carrots - can</item>
+        <item>carrots - raw</item>
+        <item>cash</item>
+        <item>catchup</item>
         <item>cat food</item>
+        <item>cat food - meow mix</item>
+        <item>catchup</item>
         <item>cat treats</item>
-        <item>catsup</item>
-        <item>cellery</item>
+        <item>cauliflower</item>
+        <item>celery</item>
+        <item>celery</item>
+        <item>cereal</item>
+        <item>chainsaw oil</item>
+        <item>chair</item>
         <item>cheddar - block</item>
-        <item>cheese - fiesta</item>
         <item>cheddar - shredded</item>
-        <item>chicken nuggets</item>
+        <item>cheese cake</item>
+        <item>cheese - fiesta</item>
+        <item>cheese slices</item>
+        <item>cheezeitz</item>
+        <item>chex mix cheddar</item>
         <item>chicken - frozen</item>
+        <item>chicken nuggets</item>
+        <item>chicken pot pie</item>
         <item>chili - no beans</item>
         <item>chili with beans</item>
+        <item>chips</item>
         <item>chips - cheetos</item>
         <item>chips - doritos</item>
         <item>chips - pretzels</item>
         <item>chips - ruffles</item>
+        <item>chips - sour cream onion</item>
         <item>chips - tortilla</item>
-        <item>clorox wipes</item>
         <item>choc drink mix</item>
+        <item>chocolate</item>
+        <item>chocolate morsels</item>
+        <item>clock parts</item>
+        <item>clock radio</item>
+        <item>clorox wipes</item>
+        <item>cocoa</item>
+        <item>coffee cup</item>
         <item>coffee - decalf</item>
+        <item>coffee - instant</item>
         <item>coffee - regular</item>
-        <item>canola oil</item>
+        <item>conditioner</item>
+        <item>contacts</item>
+        <item>contact saline</item>
+        <item>corn bread</item>
         <item>corn - can</item>
         <item>corn - cob</item>
         <item>corn - creamed</item>
         <item>corn - frozen</item>
+        <item>corn on the cob</item>
+        <item>crackers - club</item>
+        <item>crackers – saltine</item>
         <item>cream cheese</item>
         <item>croutons</item>
-        <item>deoderant - bs</item>
-        <item>deoderant - ks</item>
-        <item>deoderant - ls</item>
+        <item>cucumbers</item>
+        <item>cups</item>
+        <item>deodorant - bs</item>
+        <item>deodorant - ks</item>
+        <item>deodorant - ls</item>
+        <item>deodorant - bs</item>
+        <item>deodorant - ks</item>
+        <item>deodorant - ls</item>
+        <item>dessert</item>
+        <item>diet cola cans</item>
+        <item>diet dr thunder</item>
         <item>dish soap - dawn</item>
         <item>dishwasher soap</item>
+        <item>distilled water</item>
         <item>dog food</item>
         <item>dog treats</item>
+        <item>draino</item>
+        <item>drugs</item>
+        <item>drugs - kim</item>
+        <item>dvd-r sony 120 min, 4.7 gb</item>
+        <item>egg noodles</item>
         <item>eggs</item>
+        <item>eye drops</item>
+        <item>fabreeze</item>
+        <item>fake flowers</item>
         <item>fish sticks</item>
+        <item>flipflops</item>
+        <item>flour</item>
+        <item>food for work</item>
+        <item>french bread</item>
+        <item>french onion dip</item>
+        <item>fried onions</item>
+        <item>fritos</item>
+        <item>frosted flakes</item>
+        <item>frozen cheese sticks</item>
+        <item>frozen mozzarella sticks</item>
         <item>frozen pizza - cheese</item>
         <item>frozen pizza - pepperoni</item>
         <item>fruit - apple</item>
@@ -79,23 +164,50 @@
         <item>fruit - plum</item>
         <item>garlic - clove</item>
         <item>garlic salt</item>
+        <item>glasses</item>
+        <item>gravy brown</item>
+        <item>gravy white</item>
         <item>green beans - can</item>
+        <item>green bell peppers</item>
         <item>gum</item>
-        <item>bell pepper</item>
+        <item>ham</item>
         <item>hamburger</item>
         <item>hamburger buns</item>
+        <item>ham steaks</item>
+        <item>hat</item>
+        <item>heating pad</item>
+        <item>hot dog buns</item>
         <item>hot dogs - ballpark</item>
         <item>hot dogs - cheap</item>
-        <item>hot dog buns</item>
+        <item>hot pockets - ham-n-cheese</item>
+        <item>hot pockets - pepperoni</item>
+        <item>hyundai - 10w-30 - 4.23 liters</item>
+        <item>hyundai - at - 75w/85 api gl-4</item>
+        <item>hyundai tires - 195/65r15</item>
+        <item>ibuprofen</item>
+        <item>ice cream</item>
         <item>ice cream - chocolate</item>
         <item>ice cream - vanilla</item>
+        <item>insulated canning jar cup</item>
         <item>jalepenos</item>
+        <item>jeans</item>
+        <item>jelly - grape</item>
+        <item>jelly - strawberry</item>
         <item>jet dry</item>
+        <item>kenmore 3.5</item>
         <item>ketchup</item>
+        <item>key</item>
+        <item>kitty litter</item>
         <item>kleenex</item>
+        <item>ky</item>
         <item>laundry detergent</item>
         <item>lean pockets</item>
         <item>lettuce</item>
+        <item>licorice, black</item>
+        <item>licorice, red</item>
+        <item>light bulb - oven vent</item>
+        <item>light bulbs - ceiling</item>
+        <item>little smokies</item>
         <item>lunch meat - bologna</item>
         <item>lunch meat - ham</item>
         <item>lunch meat - turkey</item>
@@ -103,55 +215,142 @@
         <item>macaroni and cheese</item>
         <item>marinara</item>
         <item>mayo</item>
+        <item>mayo - miracle whip</item>
         <item>milk</item>
         <item>miracle whip</item>
-        <item>mozerella - shredded</item>
+        <item>money</item>
+        <item>mouthguard</item>
+        <item>mozzarella - shredded</item>
+        <item>mozzarella - shredded</item>
         <item>mustard</item>
-        <item>onion - white</item>
-        <item>onion - purple</item>
-        <item>oil Truck 5w 30 6 qts ph-20</item>
-        <item>oil Suv 5w 20 6 qts ph-20</item>
+        <item>nacho doritos</item>
+        <item>napkins</item>
+        <item>oil elantra 10w30 ph9688</item>
+        <item>oil hyundai elantra 5w20,5w30,10w30. L14459</item>
         <item>oil Kaw 10w 40</item>
-        <item>parmesean cheese</item>
+        <item>oil Suv 5w 20 6 qts ph-20</item>
+        <item>oil Truck 5w 30 6 qts ph-20</item>
+        <item>olive oil</item>
+        <item>onion - frozen</item>
+        <item>onion - purple</item>
+        <item>onion - white</item>
+        <item>oxyclean liquid</item>
+        <item>pads - always ultra thin wings green medium</item>
+        <item>pam vegetable spray</item>
+        <item>paper plates</item>
+        <item>paper towels</item>
+        <item>parmesan cheese</item>
+        <item>peanut bars</item>
+        <item>peanut butter crackers</item>
+        <item>peanut butter - crunchy</item>
         <item>peas - can</item>
         <item>pepperoni</item>
-        <item>potato</item>
+        <item>phone charger</item>
         <item>pickles - bread n butter</item>
         <item>pickles - dill</item>
+        <item>pillow</item>
+        <item>pita chips</item>
+        <item>pizza sauce</item>
+        <item>plates</item>
+        <item>pop</item>
+        <item>pop - 7up</item>
+        <item>pop - cherry diet dr thunder</item>
+        <item>pop - coke</item>
+        <item>pop - cola</item>
+        <item>popcorn - kernels</item>
+        <item>popcorn - microwave</item>
         <item>pop - diet coke</item>
         <item>pop - diet dr pepper</item>
         <item>pop - diet mountain dew</item>
         <item>pop - diet root beer</item>
         <item>pop - dr pepper</item>
-        <item>pop - coke</item>
+        <item>pop - mountain dew</item>
         <item>pop - orangette</item>
-        <item>popcorn - microwave</item>
-        <item>popcorn - kernels</item>
+        <item>poptarts</item>
         <item>poptarts - blueberry</item>
         <item>poptarts - cherry</item>
-        <item>poptarts - smores</item>
         <item>poptarts - choc</item>
+        <item>poptarts - peanut butter</item>
+        <item>poptarts - smores</item>
+        <item>poptarts - strawberry</item>
+        <item>pork n beans</item>
+        <item>potato</item>
+        <item>potato chips</item>
+        <item>potatoes</item>
+        <item>potato topper</item>
+        <item>power steering fluid</item>
         <item>prego</item>
+        <item>press-n-seal</item>
+        <item>protein shakes</item>
         <item>radishes</item>
+        <item>ranch dressing</item>
+        <item>raspberries</item>
+        <item>rat / mouse - poison</item>
+        <item>razor</item>
+        <item>razors bs</item>
+        <item>red solo cups</item>
+        <item>refried beans</item>
         <item>roast</item>
+        <item>rolls</item>
+        <item>romaine lettuce</item>
+        <item>rubbers</item>
         <item>salad dressing - french</item>
         <item>salad dressing - honey mustard</item>
-        <item>salad dressing - thousand island</item>
         <item>salad dressing - italian</item>
+        <item>salad dressing - ranch</item>
+        <item>salad dressing - thousand island</item>
         <item>salsa - medium</item>
         <item>salsa - mild</item>
         <item>salt</item>
+        <item>sams cola</item>
         <item>sausage</item>
+        <item>shampoo</item>
         <item>shaving cream</item>
-        <item>softner sheets</item>
+        <item>shoes</item>
+        <item>shorts</item>
+        <item>sleeping shorts</item>
+        <item>small trash bags</item>
+        <item>snacks</item>
+        <item>soap - bar of</item>
+        <item>socks</item>
+        <item>softener sheets</item>
+        <item>softener sheets</item>
+        <item>soup</item>
         <item>sour cream</item>
+        <item>sour gummy worms - black bag</item>
         <item>soy sauce</item>
+        <item>squash</item>
+        <item>steaks</item>
+        <item>stir fry sauce</item>
+        <item>strawberries</item>
+        <item>sulphuric acid</item>
+        <item>sun glasses</item>
+        <item>sunscreen</item>
+        <item>swim shorts</item>
+        <item>swizzle sticks</item>
+        <item>tabasco sauce</item>
+        <item>taco shells</item>
+        <item>thermos</item>
+        <item>tie</item>
         <item>toilet paper</item>
+        <item>toilet seat</item>
         <item>tomato</item>
+        <item>tomatoes</item>
+        <item>tooth brush</item>
+        <item>toothpaste</item>
         <item>tortillas</item>
-        <item>velveeta</item>
+        <item>trail mix</item>
+        <item>t-shirt</item>
+        <item>ukulele</item>
+        <item>underwear</item>
+        <item>vanilla frozen yogurt</item>
+        <item>Velveeta</item>
         <item>vitamin D</item>
-        <item>worchestershire sauce</item>
+        <item>water bottle</item>
+        <item>water bottles</item>
+        <item>Worcestershire sauce</item>
+        <item>ziplock - gallon</item>
+        <item>zucchini</item>
 	</string-array>
         <string name="share_lists">share lists</string>
         <string name="switch_from_dragable_to_sorted">switch from dragable to sorted</string>

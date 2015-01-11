@@ -18,6 +18,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,16 +35,24 @@ public class OneListActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
-	public static String listNameToShow; 
+	public static String listNameToShow;
+
+    DisplayMetrics metrics = new DisplayMetrics();
+    public int height = 600;
+    public int wwidth = 400;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.onelistmain);
-		
+
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        height = metrics.heightPixels;
+        wwidth = metrics.widthPixels;
+
 		listNameToShow = (String) getIntent().getExtras().get(getString(R.string.listnametoshow));
-		System.err.println("OneListActivity listNameToshow '" + listNameToShow + "'");
+//		System.err.println("OneListActivity listNameToshow '" + listNameToShow + "'");
 
 		openDb();
 		
@@ -224,10 +233,18 @@ public class OneListActivity extends ListActivity
 						displayItems();
 					}
 				});
-		        
+
+//                DisplayMetrics metrics = new DisplayMetrics();
+//                getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                int lheight = (int) (height * .66);
+                int lwwidth = (int) (wwidth * .66);
+
+                System.err.println("height " + lheight + "  " + height);
+                System.err.println("width  " + lwwidth + "  " + wwidth);
+
 		        AlertDialog alert = builder.create();
 		        alert.show();
-		        alert.getWindow().setLayout(400, 600);
+		        alert.getWindow().setLayout(lwwidth, lheight);
 			}
 		};
 		return listViewOnClickListener;
@@ -320,10 +337,14 @@ public class OneListActivity extends ListActivity
 				}
 			}
 		});
-		
-		AlertDialog alert = builder.create();
-		alert.show();
-		alert.getWindow().setLayout(400, 400);
+
+
+        int lheight = (int) (height * .66);
+        int lwwidth = (int) (wwidth * .66);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        alert.getWindow().setLayout(lwwidth, lheight);
 	}
 	
 	public void onClick(View view)
