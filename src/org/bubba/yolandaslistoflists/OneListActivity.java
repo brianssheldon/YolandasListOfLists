@@ -12,6 +12,7 @@ import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
 import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -23,10 +24,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -182,7 +185,16 @@ public class OneListActivity extends ListActivity
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
 		getListView().setFastScrollEnabled(true);
-	}
+
+//        Button addButton = (Button) findViewById(R.id.add);
+//        TextView tv = (TextView)findViewById(R.id.tv);
+//
+//        tv.setWidth((int) (wwidth * .89));
+//        tv.setHeight((int) (height * .15));
+//        addButton.setWidth((int) (wwidth * .09));
+//        addButton.setHeight((int) (height * .15));
+
+    }
 
 	private OnItemClickListener getItemClickListener()
 	{

@@ -7,30 +7,36 @@
 
     <TextView
         android:id="@+id/tv"
-        android:width="350sp"
-        android:layout_width="350sp"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="false"
+        android:width="300dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"/>
-
-    <Button
-        android:id="@+id/add"
-        android:layout_width="10dp"
-        android:width="10dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/tv"
-        android:onClick="onClick"
-        android:text="@string/add_new"/>
+        android:layout_alignParentBottom="false"/>
 
     <AutoCompleteTextView
         android:id="@+id/actv"
-        android:layout_width="250dip"
+        android:layout_width="300dip"
         android:layout_height="wrap_content"
-        android:width="250dp"/>
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="false"/>
+
+    <Button
+        android:id="@+id/add"
+        android:width="20dp"
+        android:layout_width="20dp"
+        android:layout_height="35dp"
+        android:text="+"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:onClick="onClick"
+        android:layout_toRightOf="@id/tv"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignRight="@+id/tv"/>
+
 
     <TextView
         android:id="@+id/ignoreme"

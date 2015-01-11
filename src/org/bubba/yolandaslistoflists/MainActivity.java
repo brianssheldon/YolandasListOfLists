@@ -353,7 +353,7 @@ public class MainActivity extends ListActivity
                 adapter.add(new OneListItem(newName));
 //				adapter.notifyDataSetChanged();
                 displayList();
-//
+
 //                OneListItem oneListItemBO2;
 //
 //                for (int i = 0; i < getListView().getCount(); i++) {

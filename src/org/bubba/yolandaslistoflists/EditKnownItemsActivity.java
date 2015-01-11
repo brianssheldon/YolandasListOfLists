@@ -26,7 +26,6 @@ import org.bubba.yolandaslistoflists.dragndrop.DragNDropListActivity;
 import org.bubba.yolandaslistoflists.prefs.PrefsBO;
 import org.bubba.yolandaslistoflists.prefs.PrefsDao;
 import org.bubba.yolandaslistoflists.sql.KnownItemsDao;
-import org.bubba.yolandaslistoflists.sql.ListOfListsDataSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +35,6 @@ import java.util.StringTokenizer;
 
 public class EditKnownItemsActivity extends Activity
 {
-	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
 
 	@Override
@@ -49,19 +47,13 @@ public class EditKnownItemsActivity extends Activity
 		
 		loadKnownItemsView();
 
-		getActionBar().setTitle("Know Items");
+		getActionBar().setTitle("Known Items");
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void openDb()
 	{
-		if(datasource == null) 
-		{
-			datasource = new ListOfListsDataSource(this);
-			datasource.open();
-		}
-		
 		if(knownItemsDao == null)
 		{
 			knownItemsDao = new KnownItemsDao(this);
@@ -80,6 +72,8 @@ public class EditKnownItemsActivity extends Activity
 			knownList = knownList + "\n" + ((KnownItem) iterator.next()).getItem();
 			i ++;
 		}
+
+        knownList = knownList.substring(2);
 
         EditText et = (EditText) findViewById(R.id.editText);
         et.setText(knownList);
@@ -129,19 +123,6 @@ public class EditKnownItemsActivity extends Activity
                 finish();
                 break;
 				
-//			case R.id.action_undo:
-//				int lastDeleteNumber = datasource.undoDelete(listNameToShow);
-//
-//				if(lastDeleteNumber == 0)
-//				{
-//					Toast.makeText(this, "\nSorry\n\nnothing to undo.\n\n", Toast.LENGTH_LONG).show();
-//				}
-//				else
-//				{
-//					displayItems();
-//				}
-//				break;
-				
 		    default:
 		    	return super.onOptionsItemSelected(item);
 	    }
@@ -173,7 +154,6 @@ public class EditKnownItemsActivity extends Activity
 	protected void onResume()
 	{
 		System.err.println("editKnownItemsActivity  open");
-		datasource.open();
 		super.onResume();
 	}
 
@@ -181,7 +161,6 @@ public class EditKnownItemsActivity extends Activity
 	protected void onPause()
 	{
 		System.err.println("editKnownItemsActivity  close");
-		datasource.close();
 		super.onPause();
 	}
 }
