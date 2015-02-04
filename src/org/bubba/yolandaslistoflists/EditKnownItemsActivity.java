@@ -73,7 +73,7 @@ public class EditKnownItemsActivity extends Activity
 			i ++;
 		}
 
-        knownList = knownList.substring(2);
+        knownList = knownList.substring(1);
 
         EditText et = (EditText) findViewById(R.id.editText);
         et.setText(knownList);
@@ -118,6 +118,43 @@ public class EditKnownItemsActivity extends Activity
                 saveKnownList();
                 break;
 
+            case R.id.action_A:
+
+                EditText et = (EditText) findViewById(R.id.editText);
+                int idx = et.getText().toString().indexOf("\na");
+                et.setSelection(idx);
+                break;
+
+            case R.id.action_E:
+
+                et = (EditText) findViewById(R.id.editText);
+                et.setSelection(et.getText().toString().indexOf("\ne") + 1);
+                break;
+
+            case R.id.action_J:
+
+                et = (EditText) findViewById(R.id.editText);
+                et.setSelection(et.getText().toString().indexOf("\nj") + 1);
+                break;
+
+            case R.id.action_O:
+
+                et = (EditText) findViewById(R.id.editText);
+                et.setSelection(et.getText().toString().indexOf("\no") + 1);
+                break;
+
+            case R.id.action_T:
+
+                et = (EditText) findViewById(R.id.editText);
+                et.setSelection(et.getText().toString().indexOf("\nt") + 1);
+                break;
+
+            case R.id.action_Y:
+
+                et = (EditText) findViewById(R.id.editText);
+                et.setSelection(et.getText().toString().indexOf("\ny") + 1);
+                break;
+
             case android.R.id.home:
                 saveKnownList();
                 finish();
@@ -134,6 +171,10 @@ public class EditKnownItemsActivity extends Activity
         String text = etView.getText().toString();
 
         String[] st = text.split("\n");
+
+        for (KnownItem knownItem : getKnownItems()) {
+            knownItemsDao.deleteItem(knownItem);
+        }
 
         for(int i = 0; i < st.length; i++)
         {

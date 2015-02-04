@@ -1,8 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-<item android:id="@+id/action_save"
-    android:icon="@drawable/ic_save"
-    android:title="save"
-    android:showAsAction="ifRoom"/>
+    <item android:id="@+id/action_save"
+        android:icon="@drawable/ic_save"
+        android:title="save"
+        android:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/action_A"
+        android:title="jump to A's"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/action_E"
+        android:title="jump to E's"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/action_J"
+        android:title="jump to J's"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/action_O"
+        android:title="jump to O's"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/action_T"
+        android:title="jump to T's"
+        android:showAsAction="never"/>
+
+    <item android:id="@+id/action_Y"
+        android:title="jump to Y's"
+        android:showAsAction="never"/>
 </menu>

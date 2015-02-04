@@ -76,8 +76,14 @@ public class KnownItemsDao
 	{
 		List<KnownItem> items = new ArrayList<KnownItem>();
 
-		Cursor cursor = database.query(KnownItemsSqlHelper.TABLE_NAME, allColumns,
-				null, null, null, null, KnownItemsSqlHelper.COLUMN_ITEM);
+		Cursor cursor = database.query(
+            KnownItemsSqlHelper.TABLE_NAME,
+                allColumns,
+				null,
+                null,
+                null,
+                null,
+                KnownItemsSqlHelper.COLUMN_ITEM + " COLLATE NOCASE");
 		cursor.moveToFirst();
 
 		while (!cursor.isAfterLast())

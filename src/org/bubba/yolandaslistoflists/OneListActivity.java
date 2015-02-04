@@ -185,15 +185,6 @@ public class OneListActivity extends ListActivity
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(getItemClickListener());
 		getListView().setFastScrollEnabled(true);
-
-//        Button addButton = (Button) findViewById(R.id.add);
-//        TextView tv = (TextView)findViewById(R.id.tv);
-//
-//        tv.setWidth((int) (wwidth * .89));
-//        tv.setHeight((int) (height * .15));
-//        addButton.setWidth((int) (wwidth * .09));
-//        addButton.setHeight((int) (height * .15));
-
     }
 
 	private OnItemClickListener getItemClickListener()
