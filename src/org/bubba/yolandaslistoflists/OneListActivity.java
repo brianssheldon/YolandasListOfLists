@@ -30,6 +30,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ShareActionProvider;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class OneListActivity extends ListActivity
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
 	public static String listNameToShow;
+    private ShareActionProvider mShareActionProvider;
 
     DisplayMetrics metrics = new DisplayMetrics();
     public int height = 600;
@@ -258,6 +260,7 @@ public class OneListActivity extends ListActivity
 	{
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.one_list_activity_actions, menu);
+
 	    return super.onCreateOptionsMenu(menu);
 	}
 	
@@ -270,7 +273,28 @@ public class OneListActivity extends ListActivity
 				deleteAllItemsOnList();
 				break;
 				
-			case R.id.action_share2:
+			case R.id.menu_item_share:
+//                setShareIntent(getDefaultIntent());
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                StringBuilder sb = new StringBuilder();
+                sb.append(listNameToShow);
+                sb.append(" list\n\n");
+
+                List<OneListItem> itemsInList = datasource.getAllItemsForOneList(listNameToShow);
+
+                for(OneListItem oneItem : itemsInList)
+                {
+                    if(!"".equals(oneItem.getItem()))
+                    {
+                        sb.append(oneItem.getItem() + "\n");
+                    }
+                }
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                startActivity(Intent.createChooser(sendIntent, "This is my text to send.xxx"));
 				break;
 	
 			case android.R.id.home:

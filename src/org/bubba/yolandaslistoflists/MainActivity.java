@@ -139,6 +139,36 @@ public class MainActivity extends ListActivity
                 Intent editKnownItemsIntent = new Intent(getBaseContext(), EditKnownItemsActivity.class);
                 startActivityForResult(editKnownItemsIntent, 151);
                 break;
+
+            case R.id.action_share1:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                StringBuilder sb = new StringBuilder();
+                sb.append("Yolanda's List of Lists\n-------------------\n");
+
+                List<OneListItem> listNames = datasource.getAllComments();
+
+                for(OneListItem listName : listNames)
+                {
+                    if(listName != null && listName.getListName() != null && !"".equals(listName.getListName()))
+                    {
+                        sb.append("\n---------" + listName.getListName() + "----------\n");
+
+                        List<OneListItem> itemsInList = datasource.getAllItemsForOneList(listName.getListName());
+
+                        for(OneListItem oneItem : itemsInList) {
+                            if (!"".equals(oneItem.getItem())) {
+                                sb.append(oneItem.getItem() + "\n");
+                            }
+                        }
+                    }
+
+                }
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                startActivity(Intent.createChooser(sendIntent, "This is my text to send.xxx"));
 	 
 	    default:
 	        return super.onOptionsItemSelected(item);
@@ -369,6 +399,8 @@ public class MainActivity extends ListActivity
 //                }
             }
         });
+
+//        getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
