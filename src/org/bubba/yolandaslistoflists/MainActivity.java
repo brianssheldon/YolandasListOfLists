@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -163,15 +164,14 @@ public class MainActivity extends ListActivity
                             }
                         }
                     }
-
                 }
 
                 sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
                 startActivity(Intent.createChooser(sendIntent, "This is my text to send.xxx"));
 	 
-	    default:
-	        return super.onOptionsItemSelected(item);
+            default:
+                return super.onOptionsItemSelected(item);
 	    }
 	    
 	    oneListItemBO = null;
@@ -400,9 +400,9 @@ public class MainActivity extends ListActivity
             }
         });
 
-//        getDialog().getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
         AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.getWindow().setSoftInputMode(
+                         WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         alertDialog.show();
         return newName;
 	}

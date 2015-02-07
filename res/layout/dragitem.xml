@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
 
     <TextView
         android:id="@+id/oneItem"
@@ -17,13 +17,12 @@
 
     <TextView
         android:id="@+id/oneQuantity"
-        android:text="@+id/TextView01"
-     	android:layout_height="30sp"
+        android:layout_height="30sp"
         android:layout_width="250sp"
         android:gravity="right"
-        android:width="10sp" 
+        android:width="10sp"
         android:textSize="18sp"
-        android:paddingRight="30dp">
-    </TextView>
+        android:layout_toRightOf="@id/oneItem"
+        android:paddingRight="30dp"/>
 
-</LinearLayout>
+</RelativeLayout>

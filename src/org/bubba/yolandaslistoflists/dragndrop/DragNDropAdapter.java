@@ -76,7 +76,8 @@ public final class DragNDropAdapter extends BaseAdapter implements RemoveListene
     	mIds = ids;
     	this.itemNames = itemNames;
     	mLayouts = layouts;
-    	mContent = content; datasource = new ListOfListsDataSource(context);
+    	mContent = content;
+        datasource = new ListOfListsDataSource(context);
 		datasource.open();
     }
 

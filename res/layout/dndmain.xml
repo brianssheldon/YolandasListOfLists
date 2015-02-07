@@ -7,24 +7,26 @@
 
     <TextView
         android:id="@+id/dndtv"
-        android:width="350sp"
-        android:layout_width="350sp"
-        android:layout_height="0dp"
+        android:width="300dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
         android:layout_alignParentBottom="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"/>
 
     <Button
         android:id="@+id/dndadd"
-        android:layout_width="10dp"
-        android:width="10dp"
-        android:layout_height="wrap_content"
+        android:width="20dp"
+        android:layout_width="20dp"
+        android:layout_height="35dp"
+        android:text="+"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:onClick="onClick"
         android:layout_alignParentBottom="false"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@id/dndtv"
-        android:onClick="onClick"
-        android:text="@string/add_new"/>
+        android:layout_toRightOf="@id/dndtv"/>
 
     <AutoCompleteTextView
         android:id="@+id/dndactv"

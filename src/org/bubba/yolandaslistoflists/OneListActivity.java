@@ -114,12 +114,21 @@ public class OneListActivity extends ListActivity
 			if(textView == null
 				|| ((TextView)textView).getText() == null
 				|| ((TextView)textView).getText().toString() == "") return;
-			
+
 			String name = ((TextView)textView).getText().toString(); // get selected item
-			
-			datasource.createComment(listNameToShow, name, 1);
-			
-//			groceryListDao.createItem(name, 1);
+
+            if(name == null || name.trim().length() == 0) return;
+
+            ((TextView)textView).setText("");
+
+            OneListItem lookupText = datasource.getItem(listNameToShow, name);
+
+            if(lookupText == null
+                    || null == lookupText.getItem()
+                    || "".equals(lookupText.getItem()))
+            {
+                datasource.createComment(listNameToShow, name, 1);
+            }
 
 			((AutoCompleteTextView)findViewById(R.id.actv)).setText("");
 
@@ -146,19 +155,6 @@ public class OneListActivity extends ListActivity
 		values = knownItemsDao.getAllItems();
 		return values;
 	}
-
-    
-//	private String getKnownItemsAsString()
-//	{
-//		List<KnownItem> items = getKnownItems();
-//		String stringOfItems = "";
-//		
-//		for (int i = 0; i < items.size(); i++)
-//		{
-//			stringOfItems += items.get(i).getItem() + "\n";
-//		}
-//		return stringOfItems;
-//	}
 
 	private void displayItems()
 	{
@@ -244,9 +240,6 @@ public class OneListActivity extends ListActivity
                 int lheight = (int) (height * .66);
                 int lwwidth = (int) (wwidth * .66);
 
-                System.err.println("height " + lheight + "  " + height);
-                System.err.println("width  " + lwwidth + "  " + wwidth);
-
 		        AlertDialog alert = builder.create();
 		        alert.show();
 		        alert.getWindow().setLayout(lwwidth, lheight);
@@ -274,7 +267,6 @@ public class OneListActivity extends ListActivity
 				break;
 				
 			case R.id.menu_item_share:
-//                setShareIntent(getDefaultIntent());
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.setType("text/plain");
@@ -294,7 +286,7 @@ public class OneListActivity extends ListActivity
 
                 sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
 
-                startActivity(Intent.createChooser(sendIntent, "This is my text to send.xxx"));
+                startActivity(Intent.createChooser(sendIntent, "List: " + listNameToShow));
 				break;
 	
 			case android.R.id.home:
@@ -350,9 +342,7 @@ public class OneListActivity extends ListActivity
 		{
 			public void onClick(DialogInterface dialog, int which)
 			{
-//				@SuppressWarnings("unchecked")
-//				ArrayAdapter<OneListItem> adapter = (ArrayAdapter<OneListItem>) getListAdapter();
-				
+
 				if(which == 0) // delete
 				{
 					datasource.deleteAll(listNameToShow);
@@ -364,7 +354,6 @@ public class OneListActivity extends ListActivity
 				}
 			}
 		});
-
 
         int lheight = (int) (height * .66);
         int lwwidth = (int) (wwidth * .66);
@@ -387,6 +376,17 @@ public class OneListActivity extends ListActivity
 				if(text == null || text.trim().length() == 0) return;
 				
 				tv.setText("");
+
+                OneListItem lookupText = datasource.getItem(listNameToShow, text);
+
+                if(lookupText == null
+                    || null == lookupText.getItem()
+                    || "".equals(lookupText.getItem()))
+                {}
+                else
+                {
+                    return;
+                }
 				
 				datasource.createComment(listNameToShow, text, 1);
 				

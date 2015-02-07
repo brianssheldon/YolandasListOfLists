@@ -37,6 +37,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,7 +55,11 @@ public class DragNDropListActivity extends ListActivity
 {
 	private ListOfListsDataSource datasource;
 	private KnownItemsDao knownItemsDao;
-	public static String listNameToShow; 
+	public static String listNameToShow;
+
+    DisplayMetrics metrics = new DisplayMetrics();
+    public int height = 600;
+    public int wwidth = 400;
 	
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -62,6 +67,10 @@ public class DragNDropListActivity extends ListActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.dndmain);//R.layout.dragndroplistview);
+
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        height = metrics.heightPixels;
+        wwidth = metrics.widthPixels;
 
         listNameToShow = (String) getIntent().getExtras().get(getString(R.string.listnametoshow));
         
@@ -121,10 +130,19 @@ public class DragNDropListActivity extends ListActivity
 				|| ((TextView)textView).getText().toString() == "") return;
 			
 			String name = ((TextView)textView).getText().toString(); // get selected item
-			
-			datasource.createComment(listNameToShow, name, 1);
-			
-//			groceryListDao.createItem(name, 1);
+
+            if(name == null || name.trim().length() == 0) return;
+
+            ((TextView)textView).setText("");
+
+            OneListItem lookupText = datasource.getItem(listNameToShow, name);
+
+            if(lookupText == null
+                    || null == lookupText.getItem()
+                    || "".equals(lookupText.getItem()))
+            {
+                datasource.createComment(listNameToShow, name, 1);
+            }
 
 			((AutoCompleteTextView)findViewById(R.id.dndactv)).setText("");
 
@@ -243,10 +261,13 @@ public class DragNDropListActivity extends ListActivity
 						createDndList();
 					}
 				});
-		        
-		        AlertDialog alert = builder.create();
-		        alert.show();
-		        alert.getWindow().setLayout(400, 600);
+
+                int lheight = (int) (height * .66);
+                int lwwidth = (int) (wwidth * .66);
+
+                AlertDialog alert = builder.create();
+                alert.show();
+                alert.getWindow().setLayout(lwwidth, lheight);
 			}
 		};
 		return listViewOnClickListener;
@@ -319,7 +340,27 @@ public class DragNDropListActivity extends ListActivity
 				break;
 				
 			case R.id.action_share2:
-				break;
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setType("text/plain");
+                StringBuilder sb = new StringBuilder();
+                sb.append(listNameToShow);
+                sb.append(" list\n\n");
+
+                List<OneListItem> itemsInList = datasource.getAllItemsForOneList(listNameToShow);
+
+                for(OneListItem oneItem : itemsInList)
+                {
+                    if(!"".equals(oneItem.getItem()))
+                    {
+                        sb.append(oneItem.getItem() + "\n");
+                    }
+                }
+
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+                startActivity(Intent.createChooser(sendIntent, "List: " + listNameToShow));
+                break;
 	
 			case android.R.id.home:
 				finish();
@@ -370,13 +411,24 @@ public class DragNDropListActivity extends ListActivity
 			case R.id.dndadd:
 				AutoCompleteTextView tv = (AutoCompleteTextView)findViewById(R.id.dndactv);
 				String text = tv.getText().toString();
-				
-				if(text == null || text.trim().length() == 0) return;
-				
-				tv.setText("");
-				
+
+                if(text == null || text.trim().length() == 0) return;
+
+                tv.setText("");
+
+                OneListItem lookupText = datasource.getItem(listNameToShow, text);
+
+                if(lookupText == null
+                        || null == lookupText.getItem()
+                        || "".equals(lookupText.getItem()))
+                {}
+                else
+                {
+                    return;
+                }
+
 				datasource.createComment(listNameToShow, text, 1);
-				
+
 				knownItemsDao.createKnownItem(text);
 				loadKnownItemsView();
 				createDndList();
@@ -409,9 +461,12 @@ public class DragNDropListActivity extends ListActivity
 				}
 			}
 		});
-		
-		AlertDialog alert = builder.create();
-		alert.show();
-		alert.getWindow().setLayout(400, 400);
+
+        int lheight = (int) (height * .66);
+        int lwwidth = (int) (wwidth * .66);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        alert.getWindow().setLayout(lwwidth, lheight);
 	}
 }
